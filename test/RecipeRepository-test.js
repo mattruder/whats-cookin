@@ -16,10 +16,15 @@ describe('Recipe', () => {
   it.skip('should have the recipes', () => {
     expect(recipeRepository.data).to.equal(recipeData)
   })
-  it('should filter recipe by tag', () => {
+  it.skip('should filter recipe by tag', () => {
 
     recipeRepository.getRecipeByTag(`hor d'oeuvre`)
-    console.log(recipeRepository.recipes)
     expect(recipeRepository.recipes.length).to.equal(9)
+  })
+  it('should filter recipe by name', () => {
+
+    recipeRepository.getRecipeByName(`Dirty Steve`)
+    expect(recipeRepository.recipes.length).to.equal(1)
+    console.log(recipeRepository.recipes)
   })
 })
