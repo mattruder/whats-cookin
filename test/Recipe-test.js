@@ -39,4 +39,14 @@ describe('Recipe', () => {
     expect(recipe.tags.length).to.equal(4);
 });
 
+  it('Should get ingredient ids', () => {
+    recipe.createIngredientList()
+    //expect(recipeRepository.recipes.length).to.equal(9)
+})
+
+  it('Should list an array of ingredients', () => {
+    recipe.createIngredientList()
+    expect(recipe.ingredientsList.length).to.equal(12)
+})
+
 });
