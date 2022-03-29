@@ -18,14 +18,10 @@ class RecipeRepository {
         this.recipes.push(recipe)
       }
     })
+    return this.recipes
   }
 
-  // goal: an array that is based on the tag
-  // input: recipe data array
-  // output: an array that is based on the tag
-  // Steps: 
-  // push recipes if tag matches into the recipe tag
-}
+};
 
 
 
