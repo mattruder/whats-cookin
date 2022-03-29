@@ -49,4 +49,9 @@ describe('Recipe', () => {
     expect(recipe.ingredientsList.length).to.equal(12)
 })
 
+it('Should get ingredient ids', () => {
+  recipe.getRecipeCost()
+  //expect(recipeRepository.recipes.length).to.equal(9)
+})
+
 });

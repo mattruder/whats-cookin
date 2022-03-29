@@ -27,12 +27,35 @@ createIngredientList() {
       return filteredIngredients
   })
     this.ingredientsList = recipeIngredientIds
-console.log(this.ingredientsList)
+console.log('ingredientList', this.ingredientsList)
+console.log('ingredients', this.ingredients)
 // iterate through ingredientsData, find/compare ids.
 // if they match, push ingredient object to our ingredientsList array
 }
 
-// getRecipeCost
+getRecipeCost() {
+  console.log('hello')
+  let recipeIngredientIds2 = this.ingredients.map((recipeIngredient) => {
+    let filteredIngredients2 = this.ingredientsList.filter((ingredientCost) => {
+      console.log('cost', ingredientCost, ingredientCost.estimatedCostInCents)
+      if(ingredientCost.id === recipeIngredient.id) {
+        return ingredientCost.estimatedCostInCents * recipeIngredient.quantity.amount
+      }
+    })
+      return filteredIngredients2
+  })
+  console.log(recipeIngredientIds2)
+  // let recipeCost = this.ingredientsList.reduce((acc, ingredient) => {
+  //
+  //     return acc
+  // }, [])
+  //     return recipeCost
+
+  //console.log('hello', recipeCost)
+// declare a variable, set up keys: this.ingredientList.forEach(ingredient) + quantity
+// iterate through this.ingredients, take quantity and assign it to the quantity key in the this.ingredientsList array
+// Match id's
+}
 
 // getRecipeInstructions
 };
