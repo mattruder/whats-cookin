@@ -7,7 +7,8 @@ class Recipe {
     this.image = recipe.image;
     this.ingredients = recipe.ingredients;
     this.tags = recipe.tags;
-    this.ingredientsList = [];
+    this.ingredientsList ;
+    this.instructions = recipe.instructions
 // instructions:
 // cost: 0
     //console.log('1', this.ingredients)
@@ -26,38 +27,45 @@ createIngredientList() {
     })
       return filteredIngredients
   })
-    this.ingredientsList = recipeIngredientIds
-console.log('ingredientList', this.ingredientsList)
-console.log('ingredients', this.ingredients)
+
+    this.ingredientsList = recipeIngredientIds.flat()
+
+
 // iterate through ingredientsData, find/compare ids.
 // if they match, push ingredient object to our ingredientsList array
 }
 
 getRecipeCost() {
-  console.log('hello')
-  let recipeIngredientIds2 = this.ingredients.map((recipeIngredient) => {
-    let filteredIngredients2 = this.ingredientsList.filter((ingredientCost) => {
-      console.log('cost', ingredientCost, ingredientCost.estimatedCostInCents)
-      if(ingredientCost.id === recipeIngredient.id) {
-        return ingredientCost.estimatedCostInCents * recipeIngredient.quantity.amount
+  this.createIngredientList()
+  let ingredientCosts = []
+  this.ingredients.map((recipeIngredient) => {
+    let filteredIngredients = this.ingredientsList.filter((ingredient) => {
+      if(ingredient.id === recipeIngredient.id) {
+        let cost = ingredient.estimatedCostInCents * recipeIngredient.quantity.amount;
+        ingredientCosts.push(cost)
       }
-    })
-      return filteredIngredients2
-  })
-  console.log(recipeIngredientIds2)
-  // let recipeCost = this.ingredientsList.reduce((acc, ingredient) => {
-  //
-  //     return acc
-  // }, [])
-  //     return recipeCost
 
-  //console.log('hello', recipeCost)
-// declare a variable, set up keys: this.ingredientList.forEach(ingredient) + quantity
-// iterate through this.ingredients, take quantity and assign it to the quantity key in the this.ingredientsList array
-// Match id's
+    })
+      // console.log(filteredIngredients)
+
+      return filteredIngredients
+
+  })
+  let finalCost = ingredientCosts.reduce((sum, num) => {
+    sum += (num / 100);
+    return sum
+  }, 0)
+return finalCost
+
 }
 
-// getRecipeInstructions
+getRecipeInstructions() {
+  let instructions = this.instructions.map((instruction) => {
+    return instruction.instruction
+  })
+  let instructionsString = instructions.toString()
+  return instructionsString
+}
 };
 
 
