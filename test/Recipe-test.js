@@ -49,10 +49,14 @@ describe('Recipe', () => {
     expect(recipe.ingredientsList.length).to.equal(12)
 })
 
-it('Should get ingredient ids', () => {
-  recipe.getRecipeCost()
-  recipe.getRecipeInstructions()
-  //expect(recipeRepository.recipes.length).to.equal(9)
+  it('Should calculate recipe cost', () => {
+  expect(recipe.getRecipeCost()).to.be.a('number')
+  expect(recipe.getRecipeCost()).to.equal(272.97)
+})
+
+  it('Should return instructions', () => {
+  expect(recipe.getRecipeInstructions()).to.be.a('string')
+  expect(recipe.getRecipeInstructions()).to.equal("Season the pork chops with salt and pepper and grill or pan fry over medium high heat until cooked, about 3-5 minutes per side. (If grilling, baste the chops in the maple dijon apple cider sauce as you grill.)Meanwhile, mix the remaining ingredients except the apple slices, bring to a simmer and cook until the sauce thickens, about 2-5 minutes.Grill or saute the apple slices until just tender but still crisp.Toss the pork chops and apple slices in the maple dijon apple cider sauce and enjoy!")
 })
 
 });

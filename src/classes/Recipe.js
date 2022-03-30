@@ -9,16 +9,9 @@ class Recipe {
     this.tags = recipe.tags;
     this.ingredientsList ;
     this.instructions = recipe.instructions
-// instructions:
-// cost: 0
-    //console.log('1', this.ingredients)
   }
 
 createIngredientList() {
-// let ingredientNames = []
-// let recipeIngredientIds = this.ingredients.map((ingredient) => {
-//   return ingredient.id
-// })
   let recipeIngredientIds = this.ingredients.map((recipeIngredient) => {
     let filteredIngredients = ingredientsData.filter((ingredientData) => {
       if(ingredientData.id === recipeIngredient.id) {
@@ -29,10 +22,6 @@ createIngredientList() {
   })
 
     this.ingredientsList = recipeIngredientIds.flat()
-
-
-// iterate through ingredientsData, find/compare ids.
-// if they match, push ingredient object to our ingredientsList array
 }
 
 getRecipeCost() {
@@ -46,7 +35,6 @@ getRecipeCost() {
       }
 
     })
-      // console.log(filteredIngredients)
 
       return filteredIngredients
 
@@ -55,7 +43,8 @@ getRecipeCost() {
     sum += (num / 100);
     return sum
   }, 0)
-return finalCost
+  let realFinalCost = Number(finalCost.toFixed(2));
+return realFinalCost
 
 }
 
