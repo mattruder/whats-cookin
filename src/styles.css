@@ -1,3 +1,54 @@
+* {
+  border: 2px solid black;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
+.food-images-section > img {
+  height: 100px;
+  width: 100px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 150px
+}
+
 body {
-  background-color: blueviolet;
+  height: 100vh;
+  margin: 0;
+}
+
+.food-images-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-top: 300px;
+}
+
+.below-food-images {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-top: 200px;
+}
+
+.all-recipe-list {
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.hidden {
+  display: none;
 }

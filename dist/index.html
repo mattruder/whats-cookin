@@ -5,7 +5,29 @@
     <title>Whats Cookin</title>
   </head>
   <body>
-    <h1>Whats Cookin</h1>
+    <header>
+      <div class="left-header">
+      <h1>What's Cookin?</h1>
+      </div>
+      <div class = "right-header">
+        <input type="text" placeholder="search">
+        <button class="favorites-btn">Favorites</button>
+        <button class="user-btn">User</button>
+      </div>
+    </header>
+    <section class="food-images-section">
+      <img src='./images/turing-logo.png'>
+      <img src='./images/turing-logo.png'>
+      <img src='./images/turing-logo.png'>
+    </section>
+    <section class="all-recipes hidden">
+      <div class="all-recipe-list">
+      </div>
+    </section>
+    <section class="below-food-images">
+      <button class="view-all-btn">View All Recipes</button>
+    </section>
+
   </body>
   <!-- Do not include the scripts.js file here - it is done automatically by the webpack server -->
   <script src="bundle.js"></script>
