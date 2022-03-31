@@ -14,8 +14,11 @@ const foodImagesSection = document.querySelector(".food-images-section");
 const allRecipesSection = document.querySelector(".all-recipes");
 const allRecipeList = document.querySelector(".all-recipe-list");
 const homeButton = document.querySelector(".home-btn")
-
+const favoriteRecipeArea = document.querySelector(".favorite-recipe-area")
+const favoritesAreaButton = document.querySelector(".favorites-btn")
 const displayRecipeSection = document.querySelector(".display-recipe")
+const userAreaButton = document.querySelector(".user-btn")
+const userArea = document.querySelector(".user-area")
 const grabRecipe = document.querySelector(".recipe-in-list")
 
 window.onload = displayNewImages()
@@ -26,6 +29,8 @@ homeButton.addEventListener('click', goHome)
 allRecipeList.addEventListener("click", (event) => {
   displayRecipe(event);
 })
+favoritesAreaButton.addEventListener('click', displayFavoriteRecipeArea)
+userAreaButton.addEventListener('click', displayUserArea)
 
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
@@ -93,7 +98,26 @@ function populateRecipeArea() {
   })
 }
 
+function displayFavoriteRecipeArea() {
+  foodImagesSection.innerHTML = ''
+  foodImagesSection.classList.add("hidden");
+  allRecipesSection.classList.add("hidden");
+  viewAllButton.classList.add("hidden");
+  displayRecipeSection.classList.add("hidden");
+  displayRecipeSection.innerHTML = ''
+  favoriteRecipeArea.classList.remove("hidden")
+}
 
+function displayUserArea() {
+  foodImagesSection.innerHTML = ''
+  foodImagesSection.classList.add("hidden");
+  allRecipesSection.classList.add("hidden");
+  viewAllButton.classList.add("hidden");
+  displayRecipeSection.classList.add("hidden");
+  displayRecipeSection.innerHTML = ''
+  favoriteRecipeArea.classList.add("hidden")
+  userArea.classList.remove("hidden")
+}
 
 
 function goHome() {
