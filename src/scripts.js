@@ -96,6 +96,7 @@ function createRecipeArea() {
   viewAllButton.classList.add("hidden");
   displayRecipeSection.classList.remove("hidden")
   displayRecipeSection.innerHTML = ''
+  filteredByTagArea.classList.add("hidden")
 }
 
 function createFilteredArea() {
