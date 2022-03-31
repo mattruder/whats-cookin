@@ -64,16 +64,6 @@ function displayNewImages() {
 }
 
 
-  const allTags = recipes.map((recipe) => {
-    return recipe.tags
-  })
-
-  const tagsReduced = allTags.flat()
-
-  const officialTagsArray = [...new Set(tagsReduced)]
-
-console.log(officialTagsArray)
-
 function viewAllRecipes() {
 allRecipeList.innerHTML = ""
 foodImagesSection.classList.add("hidden");
