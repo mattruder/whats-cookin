@@ -82,6 +82,7 @@ function populateRecipeArea() {
       displayRecipeSection.innerHTML += `
       <img src="${recipeToDisplay.image}">
       <h1>${recipeToDisplay.name}</h1>
+      <button class="favorite-btn">Favorite Recipe</button>
       <h2>Cost: ${recipeCost}</h2>
       <h3>Ingredients: </h3>
       <p>${officialIngredients}</p>
