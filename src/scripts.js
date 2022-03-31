@@ -19,7 +19,10 @@ const grabRecipe = document.querySelector(".recipe-in-list")
 
 viewAllButton.addEventListener('click', viewAllRecipes)
 homeButton.addEventListener('click', goHome)
-grabRecipe.addEventListener('click', displayRecipe)
+// grabRecipe.addEventListener('click', displayRecipe)
+allRecipeList.addEventListener("click", (event) => {
+  displayRecipe(event);
+})
 
 
 function viewAllRecipes() {
