@@ -8,6 +8,7 @@ import ingredients from './data/ingredients.js'
 import recipes from './data/recipes.js'
 import users from './data/users.js'
 
+const recipeRepo = new RecipeRepository(recipes);
 const viewAllButton = document.querySelector(".view-all-btn");
 const foodImagesSection = document.querySelector(".food-images-section");
 const allRecipesSection = document.querySelector(".all-recipes");
@@ -27,30 +28,43 @@ allRecipeList.addEventListener("click", (event) => {
 
 function viewAllRecipes() {
 allRecipeList.innerHTML = ""
-const recipeRepo = new RecipeRepository(recipes);
 foodImagesSection.classList.add("hidden");
 allRecipesSection.classList.remove("hidden");
 viewAllButton.classList.add("hidden");
 recipeRepo.data.forEach((recipe) => {
-  allRecipeList.innerHTML += `<li class="recipe-in-list" id=${recipe.name}>${recipe.name}</li>`
+  allRecipeList.innerHTML += `<li class="recipe-in-list" id=${recipe.id}>${recipe.name}</li>`
 })
 }
 
-function displayRecipe() {
+function displayRecipe(event) {
   console.log('test')
-  // foodImagesSection.classList.add("hidden");
-  // allRecipesSection.classList.add("hidden");
-  // viewAllButton.classList.add("hidden");
-  // displayRecipeSection.classList.remove("hidden")
-  // displayRecipeSection.innerHTML = ''
-  // recipeRepo.forEach((recipe) => {
-  //   var mouseclick = event.target.id
-  //   console.log(mouseclick)
-  //   console.log(recipe.name)
-  // if(grabRecipe.innerHTML === recipe.name) {
-  //   console.log("hello")
-  // }
+  foodImagesSection.classList.add("hidden");
+  allRecipesSection.classList.add("hidden");
+  viewAllButton.classList.add("hidden");
+  displayRecipeSection.classList.remove("hidden")
+  displayRecipeSection.innerHTML = ''
+  recipeRepo.data.forEach((recipe) => {
+    if(event.target.id === recipe.id.toString()) {
+      let recipeToDisplay = new Recipe(recipe)
+      let recipeCost = recipeToDisplay.getRecipeCost()
+      let ingredientsOfficial = recipeToDisplay.createIngredientList()
+      // console.log(recipe.createIngredientList())
+      let recipeInstructions = recipe["instructions"]
+      let officialInstructions = recipeInstructions.map((instruction) => {
+        return instruction.instruction
+      }).flat()
+      displayRecipeSection.innerHTML += `
+      <img src="${recipe.image}">
+      <h1>${recipe.name}</h1>
+      <h2>${recipeCost}</h2>
+      <p>${recipeToDisplay.ingredientsList}</p>
+      <p>${officialInstructions}</p>
+      `
+    }
+  })
 }
+
+
 
 
 function goHome() {
