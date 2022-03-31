@@ -18,12 +18,29 @@ const homeButton = document.querySelector(".home-btn")
 const displayRecipeSection = document.querySelector(".display-recipe")
 const grabRecipe = document.querySelector(".recipe-in-list")
 
+window.onload = displayNewImages()
+
 viewAllButton.addEventListener('click', viewAllRecipes)
 homeButton.addEventListener('click', goHome)
 // grabRecipe.addEventListener('click', displayRecipe)
 allRecipeList.addEventListener("click", (event) => {
   displayRecipe(event);
 })
+
+function getRandomIndex(array) {
+  return Math.floor(Math.random() * array.length);
+}
+
+function displayNewImages() {
+  const images = recipes.map((recipe) => {
+    return recipe.image;
+  })
+
+  foodImagesSection.innerHTML += `
+  <img src=${images[getRandomIndex(images)]}>
+  <img src=${images[getRandomIndex(images)]}>
+  <img src=${images[getRandomIndex(images)]}>`
+}
 
 
 function viewAllRecipes() {
@@ -37,27 +54,38 @@ recipeRepo.data.forEach((recipe) => {
 }
 
 function displayRecipe(event) {
-  console.log('test')
+  createRecipeArea();
+  populateRecipeArea();
+}
+
+function createRecipeArea() {
   foodImagesSection.classList.add("hidden");
   allRecipesSection.classList.add("hidden");
   viewAllButton.classList.add("hidden");
   displayRecipeSection.classList.remove("hidden")
   displayRecipeSection.innerHTML = ''
+}
+
+function populateRecipeArea() {
   recipeRepo.data.forEach((recipe) => {
     if(event.target.id === recipe.id.toString()) {
       let recipeToDisplay = new Recipe(recipe)
       let recipeCost = recipeToDisplay.getRecipeCost()
-      let ingredientsOfficial = recipeToDisplay.createIngredientList()
-      // console.log(recipe.createIngredientList())
+      recipeToDisplay.createIngredientList()
+      const officialIngredients = recipeToDisplay.ingredientsList.map((ingredient) => {
+        return ` ${ingredient.name}`
+      })
       let recipeInstructions = recipe["instructions"]
       let officialInstructions = recipeInstructions.map((instruction) => {
         return instruction.instruction
       }).flat()
       displayRecipeSection.innerHTML += `
-      <img src="${recipe.image}">
-      <h1>${recipe.name}</h1>
-      <h2>${recipeCost}</h2>
-      <p>${recipeToDisplay.ingredientsList}</p>
+      <img src="${recipeToDisplay.image}">
+      <h1>${recipeToDisplay.name}</h1>
+      <h2>Cost: ${recipeCost}</h2>
+      <h3>Ingredients: </h3>
+      <p>${officialIngredients}</p>
+      <h3>Instructions: </h3>
       <p>${officialInstructions}</p>
       `
     }
@@ -68,7 +96,11 @@ function displayRecipe(event) {
 
 
 function goHome() {
+  foodImagesSection.innerHTML = ''
+  displayNewImages()
   foodImagesSection.classList.remove("hidden");
   allRecipesSection.classList.add("hidden");
   viewAllButton.classList.remove("hidden");
+  displayRecipeSection.classList.add("hidden");
+  displayRecipeSection.innerHTML = ''
 }
