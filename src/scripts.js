@@ -16,6 +16,7 @@ const allRecipeList = document.querySelector(".all-recipe-list");
 const homeButton = document.querySelector(".home-btn")
 const favoriteRecipeArea = document.querySelector(".favorite-recipe-area")
 const favoritesAreaButton = document.querySelector(".favorites-btn")
+const favoriteRecipeButton = document.querySelector(".favorite-btn")
 const displayRecipeSection = document.querySelector(".display-recipe")
 const userAreaButton = document.querySelector(".user-btn")
 const userArea = document.querySelector(".user-area")
@@ -29,8 +30,15 @@ homeButton.addEventListener('click', goHome)
 allRecipeList.addEventListener("click", (event) => {
   displayRecipe(event);
 })
+displayRecipeSection.addEventListener("click", (event) => {
+  addRecipeToFavorites(event);
+})
 favoritesAreaButton.addEventListener('click', displayFavoriteRecipeArea)
 userAreaButton.addEventListener('click', displayUserArea)
+favoriteRecipeArea.addEventListener('click', (event) => {
+  console.log('it worked')
+  displayRecipe(event);
+})
 
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
@@ -66,6 +74,7 @@ function displayRecipe(event) {
 function createRecipeArea() {
   foodImagesSection.classList.add("hidden");
   allRecipesSection.classList.add("hidden");
+  favoriteRecipeArea.classList.add("hidden")
   viewAllButton.classList.add("hidden");
   displayRecipeSection.classList.remove("hidden")
   displayRecipeSection.innerHTML = ''
@@ -87,7 +96,7 @@ function populateRecipeArea() {
       displayRecipeSection.innerHTML += `
       <img src="${recipeToDisplay.image}">
       <h1>${recipeToDisplay.name}</h1>
-      <button class="favorite-btn">Favorite Recipe</button>
+      <button class="favorite-btn" id=${recipeToDisplay.id}>Favorite Recipe</button>
       <h2>Cost: ${recipeCost}</h2>
       <h3>Ingredients: </h3>
       <p>${officialIngredients}</p>
@@ -118,6 +127,17 @@ function displayUserArea() {
   favoriteRecipeArea.classList.add("hidden")
   userArea.classList.remove("hidden")
 }
+
+function addRecipeToFavorites(event) {
+  recipeRepo.data.forEach((recipe) => {
+    if(event.target.id === recipe.id.toString()) {
+      favoriteRecipeArea.innerHTML += `
+      <h1>${recipe.name}</h1>
+      `
+    }
+  })
+}
+
 
 
 function goHome() {
