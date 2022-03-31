@@ -21,6 +21,9 @@ const displayRecipeSection = document.querySelector(".display-recipe")
 const userAreaButton = document.querySelector(".user-btn")
 const userArea = document.querySelector(".user-area")
 const grabRecipe = document.querySelector(".recipe-in-list")
+const filteredByTagArea = document.querySelector(".filtered-by-tag-area")
+const filterDropdown = document.getElementById("tags")
+const filterButton = document.querySelector(".filter-recipes-btn")
 
 window.onload = displayNewImages()
 
@@ -36,7 +39,12 @@ displayRecipeSection.addEventListener("click", (event) => {
 favoritesAreaButton.addEventListener('click', displayFavoriteRecipeArea)
 userAreaButton.addEventListener('click', displayUserArea)
 favoriteRecipeArea.addEventListener('click', (event) => {
-  console.log('it worked')
+  displayRecipe(event);
+})
+filterButton.addEventListener('click', (event) => {
+  filterRecipes(event);
+})
+filteredByTagArea.addEventListener('click', (event) => {
   displayRecipe(event);
 })
 
@@ -90,6 +98,16 @@ function createRecipeArea() {
   displayRecipeSection.innerHTML = ''
 }
 
+function createFilteredArea() {
+  foodImagesSection.classList.add("hidden");
+  allRecipesSection.classList.add("hidden");
+  favoriteRecipeArea.classList.add("hidden")
+  viewAllButton.classList.add("hidden");
+  displayRecipeSection.classList.add("hidden")
+  displayRecipeSection.innerHTML = ''
+  filteredByTagArea.classList.remove("hidden")
+}
+
 function populateRecipeArea() {
   recipeRepo.data.forEach((recipe) => {
     if(event.target.id === recipe.id.toString()) {
@@ -123,7 +141,8 @@ function displayFavoriteRecipeArea() {
   allRecipesSection.classList.add("hidden");
   viewAllButton.classList.add("hidden");
   displayRecipeSection.classList.add("hidden");
-  displayRecipeSection.innerHTML = ''
+  displayRecipeSection.innerHTML = '';
+  filteredByTagArea.innerHTML= "";
   favoriteRecipeArea.classList.remove("hidden")
 }
 
@@ -148,6 +167,22 @@ function addRecipeToFavorites(event) {
   })
 }
 
+function filterRecipes(event) {
+  console.log(filterDropdown.value)
+  recipeRepo.data.forEach((recipe) => {
+    let recipeTags = recipe.tags.forEach((recipeTag) => {
+      if(filterDropdown.value === recipeTag) {
+        createFilteredArea();
+        filteredByTagArea.innerHTML += `
+        <h1 id=${recipe.id}>${recipe.name}</h1>
+        `
+      }
+    })
+    return recipeTags
+
+  })
+}
+
 
 
 function goHome() {
@@ -159,4 +194,6 @@ function goHome() {
   viewAllButton.classList.remove("hidden");
   displayRecipeSection.classList.add("hidden");
   displayRecipeSection.innerHTML = ''
+  filteredByTagArea.innerHTML= "";
+  filteredByTagArea.classList.add("hidden")
 }
