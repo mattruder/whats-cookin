@@ -12,17 +12,46 @@ const viewAllButton = document.querySelector(".view-all-btn");
 const foodImagesSection = document.querySelector(".food-images-section");
 const allRecipesSection = document.querySelector(".all-recipes");
 const allRecipeList = document.querySelector(".all-recipe-list");
+const homeButton = document.querySelector(".home-btn")
+
+const displayRecipeSection = document.querySelector(".display-recipe")
+const grabRecipe = document.querySelector(".recipe-in-list")
 
 viewAllButton.addEventListener('click', viewAllRecipes)
+homeButton.addEventListener('click', goHome)
+grabRecipe.addEventListener('click', displayRecipe)
+
 
 function viewAllRecipes() {
+allRecipeList.innerHTML = ""
 const recipeRepo = new RecipeRepository(recipes);
 foodImagesSection.classList.add("hidden");
 allRecipesSection.classList.remove("hidden");
+viewAllButton.classList.add("hidden");
 recipeRepo.data.forEach((recipe) => {
-  allRecipeList.innerHTML += `<li>${recipe.name}</li>`
+  allRecipeList.innerHTML += `<li class="recipe-in-list" id=${recipe.name}>${recipe.name}</li>`
 })
+}
+
+function displayRecipe() {
+  console.log('test')
+  // foodImagesSection.classList.add("hidden");
+  // allRecipesSection.classList.add("hidden");
+  // viewAllButton.classList.add("hidden");
+  // displayRecipeSection.classList.remove("hidden")
+  // displayRecipeSection.innerHTML = ''
+  // recipeRepo.forEach((recipe) => {
+  //   var mouseclick = event.target.id
+  //   console.log(mouseclick)
+  //   console.log(recipe.name)
+  // if(grabRecipe.innerHTML === recipe.name) {
+  //   console.log("hello")
+  // }
+}
 
 
-console.log(recipeRepo);
+function goHome() {
+  foodImagesSection.classList.remove("hidden");
+  allRecipesSection.classList.add("hidden");
+  viewAllButton.classList.remove("hidden");
 }
