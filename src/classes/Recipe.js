@@ -21,7 +21,7 @@ createIngredientList() {
       return filteredIngredients
   })
 
-    this.ingredientsList = recipeIngredientIds.flat()
+  this.ingredientsList = recipeIngredientIds.flat()
 }
 
 getRecipeCost() {
