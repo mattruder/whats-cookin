@@ -2,7 +2,7 @@ class User {
     constructor(userData) {
         this.favoriteRecipes = []
         this.filteredFavoriteRecipes = []
-        this.name = userData.name 
+        this.name = userData.name
         this.id = userData.id
         this.pantry = userData.pantry
         this.recipesToCook = []
@@ -16,8 +16,9 @@ class User {
 
     unfavoriteRecipe(recipe) {
         this.favoriteRecipes.forEach((favoriteRecipe) => {
-            if (favoriteRecipe.id === recipe.id) {
-                this.favoriteRecipes.splice(favoriteRecipe)
+          let indexPosition = this.favoriteRecipes.indexOf(favoriteRecipe)
+          if (this.favoriteRecipes[indexPosition].id === recipe.id) {
+            this.favoriteRecipes.splice(indexPosition, 1);
             }
         })
     }

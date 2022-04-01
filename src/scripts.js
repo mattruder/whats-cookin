@@ -10,7 +10,6 @@ import recipes from './data/recipes.js'
 import users from './data/users.js'
 
 const user = new User(users[getRandomIndex(users)])
-console.log(user)
 const recipeRepo = new RecipeRepository(recipes);
 const viewAllButton = document.querySelector(".view-all-btn");
 const foodImagesSection = document.querySelector(".food-images-section");
@@ -28,14 +27,16 @@ const filteredByTagArea = document.querySelector(".filtered-by-tag-area")
 const filterDropdown = document.getElementById("tags")
 const filterButton = document.querySelector(".filter-recipes-btn")
 const unfavoriteButton = document.querySelector(".unfavorite-btn")
+const unfavoriteButtonSection = document.querySelector(".unfavorite-btn-section")
+const allFavoritesArea = document.querySelector(".all-favorites-area")
+const filterFavoritesBtn = document.querySelector(".filter-favorite-recipes-btn")
+const filterFavoritesArea = document.querySelector(".filter-favorites-dropdown")
 
 window.onload = displayNewImages()
 
 viewAllButton.addEventListener('click', viewAllRecipes)
 homeButton.addEventListener('click', goHome)
-unfavoriteButton.addEventListener('click', (event) => {
-  removeFavoriteRecipe(event);
-});
+// unfavoriteButton.addEventListener('click', removeFavoriteRecipe)
 // grabRecipe.addEventListener('click', displayRecipe)
 allRecipeList.addEventListener("click", (event) => {
   displayRecipe(event);
@@ -44,6 +45,7 @@ displayRecipeSection.addEventListener("click", (event) => {
   addRecipeToFavorites(event);
   //addUnfavoriteButton()
 })
+
 favoritesAreaButton.addEventListener('click', displayFavoriteRecipeArea)
 userAreaButton.addEventListener('click', displayUserArea)
 favoriteRecipeArea.addEventListener('click', (event) => {
@@ -54,6 +56,9 @@ filterButton.addEventListener('click', (event) => {
 })
 filteredByTagArea.addEventListener('click', (event) => {
   displayRecipe(event);
+})
+filterFavoritesBtn.addEventListener('click', (event) => {
+  filterFavoriteRecipes(event)
 })
 
 function getRandomIndex(array) {
@@ -73,6 +78,7 @@ function displayNewImages() {
 
 function viewAllRecipes() {
 allRecipeList.innerHTML = ""
+filterFavoritesArea.classList.add("hidden")
 foodImagesSection.classList.add("hidden");
 allRecipesSection.classList.remove("hidden");
 viewAllButton.classList.add("hidden");
@@ -106,6 +112,7 @@ function displayRecipe(event) {
 }
 
 function createRecipeArea() {
+  filterFavoritesArea.classList.add("hidden")
   foodImagesSection.classList.add("hidden");
   allRecipesSection.classList.add("hidden");
   favoriteRecipeArea.classList.add("hidden")
@@ -113,9 +120,12 @@ function createRecipeArea() {
   displayRecipeSection.classList.remove("hidden")
   displayRecipeSection.innerHTML = ''
   filteredByTagArea.classList.add("hidden")
+
 }
 
 function createFilteredArea() {
+  filteredByTagArea.innerHTML = ""
+  filterFavoritesArea.classList.add("hidden")
   foodImagesSection.classList.add("hidden");
   allRecipesSection.classList.add("hidden");
   favoriteRecipeArea.classList.add("hidden")
@@ -127,6 +137,7 @@ function createFilteredArea() {
 
 function populateRecipeArea() {
   recipeRepo.data.forEach((recipe) => {
+    let newRecipeId = recipe.id + 1;
     if(event.target.id === recipe.id.toString()) {
       let recipeToDisplay = new Recipe(recipe)
       let recipeCost = recipeToDisplay.getRecipeCost()
@@ -149,10 +160,19 @@ function populateRecipeArea() {
       <p>${officialInstructions}</p>
       `
     }
+
+
+    else if(event.target.id === newRecipeId.toString()) {
+      user.unfavoriteRecipe(recipe)
+      updateFavoritesArea()
+      displayFavoriteRecipeArea();
+    }
   })
+  console.log(user.favoriteRecipes)
 }
 
 function displayFavoriteRecipeArea() {
+  filterFavoritesArea.classList.remove("hidden")
   foodImagesSection.innerHTML = ''
   foodImagesSection.classList.add("hidden");
   allRecipesSection.classList.add("hidden");
@@ -164,6 +184,7 @@ function displayFavoriteRecipeArea() {
 }
 
 function displayUserArea() {
+  filterFavoritesArea.classList.add("hidden")
   foodImagesSection.innerHTML = ''
   foodImagesSection.classList.add("hidden");
   allRecipesSection.classList.add("hidden");
@@ -187,22 +208,34 @@ function addRecipeToFavorites(event) {
         favoriteRecipeArea.innerHTML += `
         <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
         <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
-        `
+          `
+
+
+
+        // <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
+        // <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
+
         //favoriteRecipeArea.append(unfavoriteButton)
       })
     }
   })
 }
 
-function removeFavoriteRecipe(event) {
-    console.log('1', event.target.id)
-  user.favoriteRecipes.forEach((favoriteRecipe) => {
-    console.log('2', favoriteRecipe.id)
-        if(event.target.id.toString() === favoriteRecipe.id) {
-    console.log('3, hello')
-  }
-  })
+function updateFavoritesArea() {
+  favoriteRecipeArea.innerHTML = ''
+user.favoriteRecipes.forEach((favoriteRecipe) => {
+  // if(!user.favoriteRecipes.includes(recipe)) {
+  // }
+  //console.log('hello')
+  favoriteRecipeArea.innerHTML += `
+  <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
+  <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
+    `
+})
 }
+
+
+
 
 // function addUnfavoriteButton() {
 //   favoriteRecipeArea.append(unfavoriteButton)
@@ -221,9 +254,23 @@ function filterRecipes(event) {
   })
 }
 
+function filterFavoriteRecipes(event) {
+  user.favoriteRecipes.forEach((recipe) => {
+    let recipeTags = recipe.tags.forEach((recipeTag) => {
+      if(filterDropdown.value === recipeTag) {
+        createFilteredArea();
+        filteredByTagArea.innerHTML += `
+        <h1 id=${recipe.id}>${recipe.name}</h1>
+        `      }
+    })
+    return recipeTags
+  })
+}
+
 
 
 function goHome() {
+  filterFavoritesArea.classList.add("hidden")
   foodImagesSection.innerHTML = ''
   displayNewImages()
   foodImagesSection.classList.remove("hidden");
