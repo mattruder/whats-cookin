@@ -3,11 +3,14 @@ import apiCalls from './apiCalls';
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
 import Recipe from './classes/Recipe.js'
+import User from './classes/User.js'
 import RecipeRepository from './classes/RecipeRepository.js'
 import ingredients from './data/ingredients.js'
 import recipes from './data/recipes.js'
 import users from './data/users.js'
 
+const user = new User(users[getRandomIndex(users)])
+console.log(user)
 const recipeRepo = new RecipeRepository(recipes);
 const viewAllButton = document.querySelector(".view-all-btn");
 const foodImagesSection = document.querySelector(".food-images-section");
@@ -168,10 +171,17 @@ function displayUserArea() {
 
 function addRecipeToFavorites(event) {
   recipeRepo.data.forEach((recipe) => {
-    if(event.target.id === recipe.id.toString()) {
-      favoriteRecipeArea.innerHTML += `
-      <h1 id=${recipe.id}>${recipe.name}</h1>
-      `
+    if(event.target.id === recipe.id.toString() && !user.favoriteRecipes.includes(recipe)) {
+      user.favoriteRecipe(recipe)
+        console.log(user.favoriteRecipes)
+        favoriteRecipeArea.innerHTML = ''
+      user.favoriteRecipes.forEach((favoriteRecipe) => {
+        // if(!user.favoriteRecipes.includes(recipe)) {
+        // }
+        favoriteRecipeArea.innerHTML += `
+        <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
+        `
+      })
     }
   })
 }
