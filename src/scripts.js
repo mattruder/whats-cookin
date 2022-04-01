@@ -27,11 +27,13 @@ const grabRecipe = document.querySelector(".recipe-in-list")
 const filteredByTagArea = document.querySelector(".filtered-by-tag-area")
 const filterDropdown = document.getElementById("tags")
 const filterButton = document.querySelector(".filter-recipes-btn")
+const unfavoriteButton = document.querySelector(".unfavorite-btn")
 
 window.onload = displayNewImages()
 
 viewAllButton.addEventListener('click', viewAllRecipes)
 homeButton.addEventListener('click', goHome)
+unfavoriteButton.addEventListener('click', removeFavoriteRecipe);
 // grabRecipe.addEventListener('click', displayRecipe)
 allRecipeList.addEventListener("click", (event) => {
   displayRecipe(event);
@@ -178,12 +180,19 @@ function addRecipeToFavorites(event) {
       user.favoriteRecipes.forEach((favoriteRecipe) => {
         // if(!user.favoriteRecipes.includes(recipe)) {
         // }
+        //console.log('hello')
         favoriteRecipeArea.innerHTML += `
         <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
+        <button class="unfavorite-btn">Unfavorite</button>
         `
       })
     }
   })
+}
+
+function removeFavoriteRecipe() {
+  //if(event.target.closest())
+  console.log('hello')
 }
 
 function filterRecipes(event) {
@@ -193,8 +202,7 @@ function filterRecipes(event) {
         createFilteredArea();
         filteredByTagArea.innerHTML += `
         <h1 id=${recipe.id}>${recipe.name}</h1>
-        `
-      }
+        `      }
     })
     return recipeTags
   })
