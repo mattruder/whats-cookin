@@ -63,7 +63,6 @@ function displayNewImages() {
   <img src=${images[getRandomIndex(images)]}>`
 }
 
-
 function viewAllRecipes() {
 allRecipeList.innerHTML = ""
 foodImagesSection.classList.add("hidden");
@@ -72,6 +71,25 @@ viewAllButton.classList.add("hidden");
 recipeRepo.data.forEach((recipe) => {
   allRecipeList.innerHTML += `<li class="recipe-in-list" id=${recipe.id}>${recipe.name}</li>`
 })
+}
+
+const searchBtn = document.querySelector('.search-btn')
+
+searchBtn.addEventListener('click', searchRecipe)
+
+function searchRecipe() {
+    filteredByTagArea.innerHTML = ''
+    let searchInput = document.querySelector('.searchbar').value
+    searchInput = searchInput.toLowerCase();
+    recipeRepo.data.forEach((recipe) => {
+        if (recipe.name.toLowerCase().includes(searchInput)) {
+            createFilteredArea();
+        filteredByTagArea.innerHTML += `
+        <h1 id=${recipe.id}>${recipe.name}</h1>
+        `
+        }
+    })
+    document.querySelector('.searchbar').value = ''
 }
 
 function displayRecipe(event) {
@@ -159,7 +177,6 @@ function addRecipeToFavorites(event) {
 }
 
 function filterRecipes(event) {
-  console.log(filterDropdown.value)
   recipeRepo.data.forEach((recipe) => {
     let recipeTags = recipe.tags.forEach((recipeTag) => {
       if(filterDropdown.value === recipeTag) {
@@ -170,7 +187,6 @@ function filterRecipes(event) {
       }
     })
     return recipeTags
-
   })
 }
 
