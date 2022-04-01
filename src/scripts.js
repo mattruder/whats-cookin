@@ -33,13 +33,16 @@ window.onload = displayNewImages()
 
 viewAllButton.addEventListener('click', viewAllRecipes)
 homeButton.addEventListener('click', goHome)
-unfavoriteButton.addEventListener('click', removeFavoriteRecipe);
+unfavoriteButton.addEventListener('click', (event) => {
+  removeFavoriteRecipe(event);
+});
 // grabRecipe.addEventListener('click', displayRecipe)
 allRecipeList.addEventListener("click", (event) => {
   displayRecipe(event);
 })
 displayRecipeSection.addEventListener("click", (event) => {
   addRecipeToFavorites(event);
+  //addUnfavoriteButton()
 })
 favoritesAreaButton.addEventListener('click', displayFavoriteRecipeArea)
 userAreaButton.addEventListener('click', displayUserArea)
@@ -183,17 +186,27 @@ function addRecipeToFavorites(event) {
         //console.log('hello')
         favoriteRecipeArea.innerHTML += `
         <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
-        <button class="unfavorite-btn">Unfavorite</button>
+        <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
         `
+        //favoriteRecipeArea.append(unfavoriteButton)
       })
     }
   })
 }
 
-function removeFavoriteRecipe() {
-  //if(event.target.closest())
-  console.log('hello')
+function removeFavoriteRecipe(event) {
+    console.log('1', event.target.id)
+  user.favoriteRecipes.forEach((favoriteRecipe) => {
+    console.log('2', favoriteRecipe.id)
+        if(event.target.id.toString() === favoriteRecipe.id) {
+    console.log('3, hello')
+  }
+  })
 }
+
+// function addUnfavoriteButton() {
+//   favoriteRecipeArea.append(unfavoriteButton)
+// }
 
 function filterRecipes(event) {
   recipeRepo.data.forEach((recipe) => {
