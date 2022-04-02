@@ -34,7 +34,7 @@ const filterFavoritesBtn = document.querySelector(".filter-favorite-recipes-btn"
 const filterFavoritesArea = document.querySelector(".filter-favorites-dropdown")
 const allRecipeSearchbar = document.querySelector(".all-recipe-searchbar")
 const favoritesSearchbar = document.querySelector(".favorites-searchbar")
-const toCookButtonArea = document.querySelector(".to-cook-btn-area")
+const toCookButtonArea = document.querySelector(".to-cook-btn")
 
 window.onload = displayNewImages()
 
@@ -49,10 +49,14 @@ displayRecipeSection.addEventListener("click", (event) => {
   addRecipeToFavorites(event);
   //addUnfavoriteButton()
 })
-toCookButtonArea.addEventListener("click", (event) => {
-  console.log('Friday')
-  addRecipesToCook(event);
-})
+
+const anything = () => console.log('hello')
+//toCookButtonArea.onclick = anything
+//("click", (event) => {
+//debugger
+  // console.log('Saturday')
+  // addRecipesToCook(event);
+// })
 
 favoritesAreaButton.addEventListener('click', displayFavoriteRecipeArea)
 recipesToCookButton.addEventListener('click', displayRecipesToCookArea)
@@ -167,8 +171,10 @@ function createFilteredArea() {
   }
 
 function populateRecipeArea() {
+  //debugger
   recipeRepo.data.forEach((recipe) => {
     let newRecipeId = recipe.id + 1;
+    let newRecipeId2 = recipe.id + 2;
     if(event.target.id === recipe.id.toString()) {
       let recipeToDisplay = new Recipe(recipe)
       let recipeCost = recipeToDisplay.getRecipeCost()
@@ -185,7 +191,7 @@ function populateRecipeArea() {
       <h1>${recipeToDisplay.name}</h1>
       <button class="favorite-btn" id=${recipeToDisplay.id}>Favorite Recipe</button>
       <div class="to-cook-button-area">
-      <button class="to-cook-btn" id=${recipeToDisplay.id +1}>Add To My Cook List</button>
+      <button class="to-cook-btn" onclick="${anything}" id=${newRecipeId2}>Add To My Cook List</button>
       </div>
       <h2>Cost: ${recipeCost}</h2>
       <h3>Ingredients: </h3>
@@ -196,14 +202,20 @@ function populateRecipeArea() {
     }
 
 
-    else if(event.target.id === newRecipeId.toString()) {
+    if(event.target.id === newRecipeId.toString()) {
       user.unfavoriteRecipe(recipe)
       updateFavoritesArea()
       displayFavoriteRecipeArea();
     }
-  })
-  console.log(user.favoriteRecipes)
+
+  //   if(event.target.id === newRecipeId2.toString()) {
+  //     console.log('hello')
+  //     addRecipesToCook();
+  // }
+})
+  //console.log(user.favoriteRecipes)
 }
+
 
 function displayFavoriteRecipeArea() {
   filterFavoritesArea.classList.remove("hidden")
@@ -220,7 +232,7 @@ function displayFavoriteRecipeArea() {
 }
 
 function displayRecipesToCookArea() {
-  console.log('brownie')
+  //console.log('brownie')
   filterFavoritesArea.classList.add("hidden")
   foodImagesSection.innerHTML = ''
   foodImagesSection.classList.add("hidden");
@@ -261,8 +273,10 @@ function addRecipeToFavorites(event) {
 }
 
 function addRecipesToCook(event) {
+  event.preventDefault();
   user.recipesToCook.forEach((recipe) => {
-    if(event.target.id === recipe.id.toString() && !user.recipesToCook.includes(recipe)) {
+    let recipeId2 = recipe.id + 2
+    if(event.target.id === recipeId2.toString() && !user.recipesToCook.includes(recipe)) {
       user.decideToCook(recipe)
         //console.log(user.favoriteRecipes)
         recipesToCookArea.innerHTML = ''
@@ -272,7 +286,7 @@ function addRecipesToCook(event) {
         //console.log('hello')
         recipesToCookArea.innerHTML += `
         <h1 id=${recipeToCook.id}>${recipeToCook.name}</h1>
-        <button class="unfavorite-btn" id=${recipeToCook.id +1}>Unfavorite</button>
+        <button class="unfavorite-btn" id=${recipeId2}>Unfavorite</button>
           `
 
 
