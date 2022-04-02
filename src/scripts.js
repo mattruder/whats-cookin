@@ -4,11 +4,31 @@ import './images/turing-logo.png'
 import Recipe from './classes/Recipe.js'
 import User from './classes/User.js'
 import RecipeRepository from './classes/RecipeRepository.js'
-import ingredients from './data/ingredients.js'
-import recipes from './data/recipes.js'
-import users from './data/users.js'
+const fetchAll = () => {
+  Promise.all([fetchusers(), fetchrecipes(), fetchingredients()])}
+// import ingredients from './data/ingredients.js'
+// import recipes from './data/recipes.js'
+// import users from './data/users.js'
+let users = `https://what-s-cookin-starter-kit.herokuapp.com/api/v1/users`
+let ingredients = `https://what-s-cookin-starter-kit.herokuapp.com/api/v1/ingredients`
+let recipes = `https://what-s-cookin-starter-kit.herokuapp.com/api/v1/recipes`
 
-const user = new User(users[getRandomIndex(users)])
+let userDataTest = [];
+Promise.all([
+  fetch(users)
+  .then(response => response.json())
+  .then(data => userDataTest.push(data)),
+  fetch(ingredients) 
+  .then(response => response.json()),
+  // .then(data => console.log('ingredients', data)), 
+  fetch(recipes)
+  .then(response => response.json())
+  // .then(data => console.log('recipe', data))
+])
+console.log('Test', userDataTest)
+
+
+const user = new User(users.usersData[getRandomIndex(users.usersData)])
 const recipeRepo = new RecipeRepository(recipes);
 const viewAllButton = document.querySelector(".view-all-btn");
 const foodImagesSection = document.querySelector(".food-images-section");
