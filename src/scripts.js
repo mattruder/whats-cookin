@@ -109,6 +109,26 @@ function searchRecipe() {
     document.querySelector('.searchbar').value = ''
 }
 
+const favoriteSearchBtn = document.querySelector('.favorite-search-btn')
+
+favoriteSearchBtn.addEventListener('click', searchFavoriteRecipe)
+
+
+function searchFavoriteRecipe() {
+    filteredByTagArea.innerHTML = ''
+    let searchInput = document.querySelector('.favorite-searchbar').value
+    searchInput = searchInput.toLowerCase();
+    user.favoriteRecipes.forEach((recipe) => {
+        if (recipe.name.toLowerCase().includes(searchInput)) {
+            createFilteredArea();
+        filteredByTagArea.innerHTML += `
+        <h1 id=${recipe.id}>${recipe.name}</h1>
+        `
+        }
+    })
+    document.querySelector('.favorite-searchbar').value = ''
+}
+
 function displayRecipe(event) {
   createRecipeArea();
   populateRecipeArea();
