@@ -25,6 +25,7 @@ const userArea = document.querySelector(".user-area")
 const grabRecipe = document.querySelector(".recipe-in-list")
 const filteredByTagArea = document.querySelector(".filtered-by-tag-area")
 const filterDropdown = document.getElementById("tags")
+const filterDropdown1 = document.getElementById("tags1")
 const filterButton = document.querySelector(".filter-recipes-btn")
 const unfavoriteButton = document.querySelector(".unfavorite-btn")
 const unfavoriteButtonSection = document.querySelector(".unfavorite-btn-section")
@@ -124,7 +125,7 @@ function createRecipeArea() {
 }
 
 function createFilteredArea() {
-  filteredByTagArea.innerHTML = ""
+  //filteredByTagArea.innerHTML = ""
   filterFavoritesArea.classList.add("hidden")
   foodImagesSection.classList.add("hidden");
   allRecipesSection.classList.add("hidden");
@@ -257,7 +258,7 @@ function filterRecipes(event) {
 function filterFavoriteRecipes(event) {
   user.favoriteRecipes.forEach((recipe) => {
     let recipeTags = recipe.tags.forEach((recipeTag) => {
-      if(filterDropdown.value === recipeTag) {
+      if(filterDropdown1.value === recipeTag) {
         createFilteredArea();
         filteredByTagArea.innerHTML += `
         <h1 id=${recipe.id}>${recipe.name}</h1>
