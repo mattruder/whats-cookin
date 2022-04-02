@@ -1,6 +1,5 @@
 import './styles.css';
 import apiCalls from './apiCalls';
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
 import Recipe from './classes/Recipe.js'
 import User from './classes/User.js'
@@ -34,34 +33,32 @@ const filterFavoritesBtn = document.querySelector(".filter-favorite-recipes-btn"
 const filterFavoritesArea = document.querySelector(".filter-favorites-dropdown")
 const allRecipeSearchbar = document.querySelector(".all-recipe-searchbar")
 const favoritesSearchbar = document.querySelector(".favorites-searchbar")
-const toCookButtonArea = document.querySelector(".to-cook-btn")
+const toCookButtonArea = document.querySelector(".to-cook-button-area")
+const viewToCookFromFavorites = document.querySelector(".recipes-to-cook-from-favorites-btn")
 
 window.onload = displayNewImages()
 
 viewAllButton.addEventListener('click', viewAllRecipes)
 homeButton.addEventListener('click', goHome)
-// unfavoriteButton.addEventListener('click', removeFavoriteRecipe)
-// grabRecipe.addEventListener('click', displayRecipe)
 allRecipeList.addEventListener("click", (event) => {
   displayRecipe(event);
 })
 displayRecipeSection.addEventListener("click", (event) => {
   addRecipeToFavorites(event);
-  //addUnfavoriteButton()
 })
 
-const anything = () => console.log('hello')
-//toCookButtonArea.onclick = anything
-//("click", (event) => {
-//debugger
-  // console.log('Saturday')
-  // addRecipesToCook(event);
-// })
+viewToCookFromFavorites.addEventListener("click", displayRecipesToCookArea)
+
+toCookButtonArea.addEventListener("click", addRecipesToCook)
 
 favoritesAreaButton.addEventListener('click', displayFavoriteRecipeArea)
 recipesToCookButton.addEventListener('click', displayRecipesToCookArea)
 
 favoriteRecipeArea.addEventListener('click', (event) => {
+  displayRecipe(event);
+})
+
+recipesToCookArea.addEventListener("click", (event) => {
   displayRecipe(event);
 })
 filterButton.addEventListener('click', (event) => {
@@ -91,6 +88,8 @@ function displayNewImages() {
 }
 
 function viewAllRecipes() {
+    recipesToCookArea.classList.add("hidden")
+  toCookButtonArea.classList.add("hidden")
 allRecipeList.innerHTML = ""
 filterFavoritesArea.classList.add("hidden")
 foodImagesSection.classList.add("hidden");
@@ -153,13 +152,15 @@ function createRecipeArea() {
   viewAllButton.classList.add("hidden");
   displayRecipeSection.classList.remove("hidden")
   displayRecipeSection.innerHTML = ''
+  toCookButtonArea.innerHTML = ''
   filteredByTagArea.classList.add("hidden")
   allRecipeSearchbar.classList.remove("hidden");
   favoritesSearchbar.classList.add("hidden");
+  toCookButtonArea.classList.remove("hidden")
+    recipesToCookArea.classList.add("hidden")
 }
 
 function createFilteredArea() {
-  //filteredByTagArea.innerHTML = ""
   filterFavoritesArea.classList.add("hidden")
   foodImagesSection.classList.add("hidden");
   allRecipesSection.classList.add("hidden");
@@ -168,10 +169,10 @@ function createFilteredArea() {
   displayRecipeSection.classList.add("hidden")
   displayRecipeSection.innerHTML = ''
   filteredByTagArea.classList.remove("hidden")
+  toCookButtonArea.classList.add("hidden")
   }
 
 function populateRecipeArea() {
-  //debugger
   recipeRepo.data.forEach((recipe) => {
     let newRecipeId = recipe.id + 1;
     let newRecipeId2 = recipe.id + 2;
@@ -190,17 +191,16 @@ function populateRecipeArea() {
       <img src="${recipeToDisplay.image}">
       <h1>${recipeToDisplay.name}</h1>
       <button class="favorite-btn" id=${recipeToDisplay.id}>Favorite Recipe</button>
-      <div class="to-cook-button-area">
-      <button class="to-cook-btn" onclick="${anything}" id=${newRecipeId2}>Add To My Cook List</button>
-      </div>
       <h2>Cost: ${recipeCost}</h2>
       <h3>Ingredients: </h3>
       <p>${officialIngredients}</p>
       <h3>Instructions: </h3>
       <p>${officialInstructions}</p>
       `
+      toCookButtonArea.innerHTML += `
+      <button class="to-cook-btn" id=${newRecipeId2}>Add To My Cook List</button>
+     `
     }
-
 
     if(event.target.id === newRecipeId.toString()) {
       user.unfavoriteRecipe(recipe)
@@ -208,12 +208,11 @@ function populateRecipeArea() {
       displayFavoriteRecipeArea();
     }
 
-  //   if(event.target.id === newRecipeId2.toString()) {
-  //     console.log('hello')
-  //     addRecipesToCook();
-  // }
+    if(event.target.id === newRecipeId2.toString()) {
+      console.log('hello')
+      addRecipesToCook();
+  }
 })
-  //console.log(user.favoriteRecipes)
 }
 
 
@@ -229,10 +228,11 @@ function displayFavoriteRecipeArea() {
   favoriteRecipeArea.classList.remove("hidden");
   allRecipeSearchbar.classList.add("hidden");
   favoritesSearchbar.classList.remove("hidden");
+  toCookButtonArea.classList.add("hidden")
+  recipesToCookArea.classList.add("hidden")
 }
 
 function displayRecipesToCookArea() {
-  //console.log('brownie')
   filterFavoritesArea.classList.add("hidden")
   foodImagesSection.innerHTML = ''
   foodImagesSection.classList.add("hidden");
@@ -244,57 +244,34 @@ function displayRecipesToCookArea() {
   recipesToCookArea.classList.remove("hidden")
   allRecipeSearchbar.classList.remove("hidden");
   favoritesSearchbar.classList.add("hidden");
+  toCookButtonArea.classList.add("hidden")
 }
 
 function addRecipeToFavorites(event) {
   recipeRepo.data.forEach((recipe) => {
     if(event.target.id === recipe.id.toString() && !user.favoriteRecipes.includes(recipe)) {
       user.favoriteRecipe(recipe)
-        console.log(user.favoriteRecipes)
         favoriteRecipeArea.innerHTML = ''
       user.favoriteRecipes.forEach((favoriteRecipe) => {
-        // if(!user.favoriteRecipes.includes(recipe)) {
-        // }
-        //console.log('hello')
         favoriteRecipeArea.innerHTML += `
         <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
         <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
           `
-
-
-
-        // <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
-        // <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
-
-        //favoriteRecipeArea.append(unfavoriteButton)
       })
     }
   })
 }
 
 function addRecipesToCook(event) {
-  event.preventDefault();
-  user.recipesToCook.forEach((recipe) => {
-    let recipeId2 = recipe.id + 2
+  recipeRepo.data.forEach((recipe) => {
+    let recipeId2 = recipe.id + 2;
     if(event.target.id === recipeId2.toString() && !user.recipesToCook.includes(recipe)) {
       user.decideToCook(recipe)
-        //console.log(user.favoriteRecipes)
         recipesToCookArea.innerHTML = ''
       user.recipesToCook.forEach((recipeToCook) => {
-        // if(!user.favoriteRecipes.includes(recipe)) {
-        // }
-        //console.log('hello')
         recipesToCookArea.innerHTML += `
         <h1 id=${recipeToCook.id}>${recipeToCook.name}</h1>
-        <button class="unfavorite-btn" id=${recipeId2}>Unfavorite</button>
           `
-
-
-
-        // <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
-        // <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
-
-        //favoriteRecipeArea.append(unfavoriteButton)
       })
     }
   })
@@ -303,22 +280,12 @@ function addRecipesToCook(event) {
 function updateFavoritesArea() {
   favoriteRecipeArea.innerHTML = ''
 user.favoriteRecipes.forEach((favoriteRecipe) => {
-  // if(!user.favoriteRecipes.includes(recipe)) {
-  // }
-  //console.log('hello')
   favoriteRecipeArea.innerHTML += `
   <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
   <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
     `
 })
 }
-
-
-
-
-// function addUnfavoriteButton() {
-//   favoriteRecipeArea.append(unfavoriteButton)
-// }
 
 function filterRecipes(event) {
   recipeRepo.data.forEach((recipe) => {
@@ -362,4 +329,6 @@ function goHome() {
   filteredByTagArea.classList.add("hidden");
   allRecipeSearchbar.classList.remove("hidden");
   favoritesSearchbar.classList.add("hidden");
+  toCookButtonArea.classList.add("hidden")
+    recipesToCookArea.classList.add("hidden")
 }
