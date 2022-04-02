@@ -20,8 +20,8 @@ const favoriteRecipeArea = document.querySelector(".favorite-recipe-area")
 const favoritesAreaButton = document.querySelector(".favorites-btn")
 const favoriteRecipeButton = document.querySelector(".favorite-btn")
 const displayRecipeSection = document.querySelector(".display-recipe")
-const userAreaButton = document.querySelector(".user-btn")
-const userArea = document.querySelector(".user-area")
+const recipesToCookButton = document.querySelector(".recipes-to-cook-btn")
+const recipesToCookArea = document.querySelector(".recipes-to-cook-area")
 const grabRecipe = document.querySelector(".recipe-in-list")
 const filteredByTagArea = document.querySelector(".filtered-by-tag-area")
 const filterDropdown = document.getElementById("tags")
@@ -34,6 +34,7 @@ const filterFavoritesBtn = document.querySelector(".filter-favorite-recipes-btn"
 const filterFavoritesArea = document.querySelector(".filter-favorites-dropdown")
 const allRecipeSearchbar = document.querySelector(".all-recipe-searchbar")
 const favoritesSearchbar = document.querySelector(".favorites-searchbar")
+const toCookButtonArea = document.querySelector(".to-cook-btn-area")
 
 window.onload = displayNewImages()
 
@@ -48,9 +49,14 @@ displayRecipeSection.addEventListener("click", (event) => {
   addRecipeToFavorites(event);
   //addUnfavoriteButton()
 })
+toCookButtonArea.addEventListener("click", (event) => {
+  console.log('Friday')
+  addRecipesToCook(event);
+})
 
 favoritesAreaButton.addEventListener('click', displayFavoriteRecipeArea)
-userAreaButton.addEventListener('click', displayUserArea)
+recipesToCookButton.addEventListener('click', displayRecipesToCookArea)
+
 favoriteRecipeArea.addEventListener('click', (event) => {
   displayRecipe(event);
 })
@@ -63,6 +69,7 @@ filteredByTagArea.addEventListener('click', (event) => {
 filterFavoritesBtn.addEventListener('click', (event) => {
   filterFavoriteRecipes(event)
 })
+
 
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
@@ -177,6 +184,9 @@ function populateRecipeArea() {
       <img src="${recipeToDisplay.image}">
       <h1>${recipeToDisplay.name}</h1>
       <button class="favorite-btn" id=${recipeToDisplay.id}>Favorite Recipe</button>
+      <div class="to-cook-button-area">
+      <button class="to-cook-btn" id=${recipeToDisplay.id +1}>Add To My Cook List</button>
+      </div>
       <h2>Cost: ${recipeCost}</h2>
       <h3>Ingredients: </h3>
       <p>${officialIngredients}</p>
@@ -209,7 +219,8 @@ function displayFavoriteRecipeArea() {
   favoritesSearchbar.classList.remove("hidden");
 }
 
-function displayUserArea() {
+function displayRecipesToCookArea() {
+  console.log('brownie')
   filterFavoritesArea.classList.add("hidden")
   foodImagesSection.innerHTML = ''
   foodImagesSection.classList.add("hidden");
@@ -218,7 +229,7 @@ function displayUserArea() {
   displayRecipeSection.classList.add("hidden");
   displayRecipeSection.innerHTML = ''
   favoriteRecipeArea.classList.add("hidden")
-  userArea.classList.remove("hidden")
+  recipesToCookArea.classList.remove("hidden")
   allRecipeSearchbar.classList.remove("hidden");
   favoritesSearchbar.classList.add("hidden");
 }
@@ -236,6 +247,32 @@ function addRecipeToFavorites(event) {
         favoriteRecipeArea.innerHTML += `
         <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
         <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
+          `
+
+
+
+        // <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
+        // <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
+
+        //favoriteRecipeArea.append(unfavoriteButton)
+      })
+    }
+  })
+}
+
+function addRecipesToCook(event) {
+  user.recipesToCook.forEach((recipe) => {
+    if(event.target.id === recipe.id.toString() && !user.recipesToCook.includes(recipe)) {
+      user.decideToCook(recipe)
+        //console.log(user.favoriteRecipes)
+        recipesToCookArea.innerHTML = ''
+      user.recipesToCook.forEach((recipeToCook) => {
+        // if(!user.favoriteRecipes.includes(recipe)) {
+        // }
+        //console.log('hello')
+        recipesToCookArea.innerHTML += `
+        <h1 id=${recipeToCook.id}>${recipeToCook.name}</h1>
+        <button class="unfavorite-btn" id=${recipeToCook.id +1}>Unfavorite</button>
           `
 
 
