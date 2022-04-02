@@ -32,6 +32,8 @@ const unfavoriteButtonSection = document.querySelector(".unfavorite-btn-section"
 const allFavoritesArea = document.querySelector(".all-favorites-area")
 const filterFavoritesBtn = document.querySelector(".filter-favorite-recipes-btn")
 const filterFavoritesArea = document.querySelector(".filter-favorites-dropdown")
+const allRecipeSearchbar = document.querySelector(".all-recipe-searchbar")
+const favoritesSearchbar = document.querySelector(".favorites-searchbar")
 
 window.onload = displayNewImages()
 
@@ -121,7 +123,8 @@ function createRecipeArea() {
   displayRecipeSection.classList.remove("hidden")
   displayRecipeSection.innerHTML = ''
   filteredByTagArea.classList.add("hidden")
-
+  allRecipeSearchbar.classList.remove("hidden");
+  favoritesSearchbar.classList.add("hidden");
 }
 
 function createFilteredArea() {
@@ -134,7 +137,7 @@ function createFilteredArea() {
   displayRecipeSection.classList.add("hidden")
   displayRecipeSection.innerHTML = ''
   filteredByTagArea.classList.remove("hidden")
-}
+  }
 
 function populateRecipeArea() {
   recipeRepo.data.forEach((recipe) => {
@@ -181,7 +184,9 @@ function displayFavoriteRecipeArea() {
   displayRecipeSection.classList.add("hidden");
   displayRecipeSection.innerHTML = '';
   filteredByTagArea.innerHTML= "";
-  favoriteRecipeArea.classList.remove("hidden")
+  favoriteRecipeArea.classList.remove("hidden");
+  allRecipeSearchbar.classList.add("hidden");
+  favoritesSearchbar.classList.remove("hidden");
 }
 
 function displayUserArea() {
@@ -194,6 +199,8 @@ function displayUserArea() {
   displayRecipeSection.innerHTML = ''
   favoriteRecipeArea.classList.add("hidden")
   userArea.classList.remove("hidden")
+  allRecipeSearchbar.classList.remove("hidden");
+  favoritesSearchbar.classList.add("hidden");
 }
 
 function addRecipeToFavorites(event) {
@@ -281,5 +288,7 @@ function goHome() {
   displayRecipeSection.classList.add("hidden");
   displayRecipeSection.innerHTML = ''
   filteredByTagArea.innerHTML= "";
-  filteredByTagArea.classList.add("hidden")
+  filteredByTagArea.classList.add("hidden");
+  allRecipeSearchbar.classList.remove("hidden");
+  favoritesSearchbar.classList.add("hidden");
 }
