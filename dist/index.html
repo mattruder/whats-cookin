@@ -10,10 +10,17 @@
       <h1 class="home-btn">What's Cookin?</h1>
       </div>
       <div class = "right-header">
-        <input class="searchbar" type="text" placeholder="search">
-        <button class="search-btn">Search</button>
-        <button class="favorites-btn">Favorites</button>
-        <button class="user-btn">User</button>
+        <div class = "all-recipe-searchbar">
+          <input class="searchbar" type="text" placeholder="search all recipes">
+          <button class="search-btn">Search</button>
+          <button class="favorites-btn">Favorites</button>
+          <button class="recipes-to-cook-btn">Recipes to cook</button>
+        </div>
+        <div class = "favorites-searchbar hidden">
+          <input class="favorite-searchbar" type="text" placeholder="search favorites">
+          <button class="favorite-search-btn">Search</button>
+          <button class="recipes-to-cook-from-favorites-btn">Recipes to cook</button>
+        </div>
       </div>
     </header>
     <section class="food-images-section">
@@ -33,6 +40,7 @@
         <option value="dinner">dinner</option>
         <option value="sauce">sauce</option>
         <option value="side dish">side dish</option>
+        <option value="snack">snack</option>
         <option value="morning meal">morning meal</option>
         <option value="brunch">brunch</option>
         <option value="breakfast">breakfast</option>
@@ -47,11 +55,44 @@
     </section>
     <section class="display-recipe hidden">
     </section>
+    <section class="to-cook-button-area hidden">
+    <button class="to-cook-btn hidden">Add To My Cook List</button>
+  </section>
+
     <section class="filtered-by-tag-area hidden">
     </section>
-    <section class="favorite-recipe-area hidden">
+    <section class="filter-favorites-dropdown hidden">
+      <label for="recipe-tags1">Filter By Tag:</label>
+      <select name="recipe-tags1" id="tags1">
+        <option value="antipasti">antipasti</option>
+        <option value="starter">starter</option>
+        <option value="appetizer">appetizer</option>
+        <option value="antipasto">antipasto</option>
+        <option value="hor d'oeuvre">hor d'oeuvre</option>
+        <option value="lunch">lunch</option>
+        <option value="main course">main course</option>
+        <option value="main dish">main dish</option>
+        <option value="dinner">dinner</option>
+        <option value="sauce">sauce</option>
+        <option value="side dish">side dish</option>
+        <option value="snack">snack</option>
+        <option value="morning meal">morning meal</option>
+        <option value="brunch">brunch</option>
+        <option value="breakfast">breakfast</option>
+        <option value="salad">salad</option>
+        <option value="condiment">condiment</option>
+        <option value="dip">dip</option>
+        <option value="spread">spread</option>
+      </select>
+      <button class="filter-favorite-recipes-btn">Filter</button>
     </section>
-    <section class="user-area hidden">
+
+    <section class="favorite-recipe-area">
+      <button class="unfavorite-btn hidden">Unfavorite</button>
+    </section>
+
+
+    <section class="recipes-to-cook-area hidden">
     </section>
     <section class="below-food-images">
       <button class="view-all-btn">View All Recipes</button>
