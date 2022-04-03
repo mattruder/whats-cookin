@@ -1,16 +1,48 @@
-# What's Cookin'? Starter Kit
+# What's Cookin
 
-The details of this project are outlined in the <a href="https://frontend.turing.edu/projects/What%27sCookin-PartOne.html" target="\__blank">project spec</a>.
+What's Cookin is an application that allows users to favorite and unfavorite a recipe from a given list of recipes.
 
-## Set Up
+### Getting Started
 
-1. Within your group, decide on one person to have the project repository on their Github account. This person will *fork* this repository - on the top right corner of the page, click the fork button.
-2. All group members should then clone down the forked repository (make sure that everyone is added as a collaborator as well). Since you don't want your project to be named "whats-cookin-starter-kit", add an optional argument after the repo url when cloning. The command should look like this: `git clone [remote-address] [what you want to name the repo]`.
-3. Once you have cloned the repo, change into the directory and install the project dependencies. Run `npm install` or `npm i` to install project dependencies.
-4. Run npm start in the terminal to see the HTML page (you should see some boilerplate HTML displayed on the page). `Control + C` is the command to stop running the local server. Closing the terminal without stopping the server first could allow the server to continue to run in the background and cause problems. This command is not specific to Webpack; make note of it for future use.
-5. Make sure both members of your team are collaborators on the forked repo.
-6. Do not run `npm audit fix --force`. This will update to the latest version of packages. We need to be using `webpack-dev-server@3.11.2` which is not the latest version. If you start to run into Webpack errors, first check that all group members are using the correct version.
+##### To get started:
 
-## Testing
+- click on this [link](https://github.com/mattruder/whats-cookin-starter-kit)
 
-Mocha and chai are already set up, with a boilerplate test for you.
+- hit this green box that says `Code`
+
+![green box](https://user-images.githubusercontent.com/89413678/161453090-3fb52412-8b7f-4c8e-b7f6-359a83db5114.png)
+
+- Copy the SSH
+
+![Copy SSH](https://user-images.githubusercontent.com/89413678/161453094-154b45dd-f6bf-4883-bfeb-4df1890f256b.png)
+
+
+- Open the terminal
+- Type `git clone` + paste the SSH link
+
+
+### Using the application
+
+##### To View Website:
+
+
+
+##### Favorite a Recipe:
+
+
+
+
+
+### Built With
+
+- JavaScript
+- CSS
+- HTML
+
+### Contributors
+
+- Nicholas Ao [GitHub](https://github.com/aominhlong)
+
+### Future Additions
+
+
