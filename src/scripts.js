@@ -269,8 +269,10 @@ function addRecipeToFavorites(event) {
         favoriteRecipeArea.innerHTML = ''
       user.favoriteRecipes.forEach((favoriteRecipe) => {
         favoriteRecipeArea.innerHTML += `
+        <div class="favorite-recipe-styling">
         <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
         <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
+        </div>
           `
       })
     }
@@ -303,7 +305,7 @@ user.favoriteRecipes.forEach((favoriteRecipe) => {
 }
 
 function filterRecipes(event) {
-  recipeRepo.data.forEach((recipe) => {
+  recipeRepo.data.recipeData.forEach((recipe) => {
     let recipeTags = recipe.tags.forEach((recipeTag) => {
       if(filterDropdown.value === recipeTag) {
         createFilteredArea();

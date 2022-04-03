@@ -15,11 +15,14 @@ html {
 }
 
 .food-images-section > img {
-  height: 100px;
-  width: 100px;
+  height: 250px;
+  width: 250px;
 }
 
 header {
+  font-family: Impact, fantasy;
+  font-size: 25px;
+  background-color: #E5E5E5;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -31,18 +34,60 @@ body {
   margin: 0;
 }
 
+.all-recipe-searchbar, .favorites-searchbar {
+}
+
+.search-btn, .favorites-btn, .recipes-to-cook-btn,
+.favorite-search-btn, .recipes-to-cook-from-favorites-btn {
+ padding: 10px;
+ box-shadow: 4px;
+ border-radius: 5px;
+}
+.searchbar, .favorite-searchbar {
+  padding: 10px;
+  box-shadow: 4px;
+  border-radius: 5px;
+}
+
 .food-images-section {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding-top: 300px;
+  padding-top: 200px;
+}
+.view-all-btn {
+  padding: 10px;
+  box-shadow: 4px;
+  border-radius: 5px;
 }
 
 .below-food-images {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding-top: 200px;
+  padding-top: 100px;
+}
+
+.favorite-recipe-styling {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.filter-favorites-dropdown > button, select, label {
+  /* height: 50px; */
+  padding: 10px;
+  box-shadow: 4px;
+  border-radius: 5px;
+}
+
+.filter-recipe-btn {
+  padding: 10px;
+  box-shadow: 4px;
+  border-radius: 5px;
+}
+
+.unfavorite-btn {
+  margin-right: 10px;
 }
 
 .all-recipe-list {
