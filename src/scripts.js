@@ -7,42 +7,18 @@ import User from './classes/User.js'
 import RecipeRepository from './classes/RecipeRepository.js'
 
 let allData = []
-
-
+let userData;
+let user;
+let recipeRepo;
+let recipes;
 
 getData().then(data => (allData.push(data)))
+.then(data => userData = allData[0][0])
+.then(data => user = new User(userData['usersData'][getRandomIndex(userData['usersData'])]))
+.then(data => recipes = allData[0][2])
+.then(data => recipeRepo = new RecipeRepository(recipes))
+.then(data => displayNewImages())
 
-const filterAllData = allData.forEach((array) => {
-  array.forEach((obj) => {
-
-  })
-})
-
-let alpha = allData[0]
-let beta = alpha
-console.log('allData', allData)
-console.log('tester', alpha)
-// console.log('allData next', allData['usersData'])
-
-
-
-let allDataMod = allData[0]['userData']
-console.log('allDataMod', allDataMod)
-// console.log('allData', allDataMod)
-
-
-// let userData = allDataMod[0]
-// let ingredientData = allData[1].ingredientsData
-// let recipeData = allData[2].recipeData
-
-// console.log(userData)
-// console.log(ingredientData)
-// console.log(recipeData)
-
-
-
-const user = new User(users.usersData[getRandomIndex(users.usersData)])
-const recipeRepo = new RecipeRepository(recipes);
 const viewAllButton = document.querySelector(".view-all-btn");
 const foodImagesSection = document.querySelector(".food-images-section");
 const allRecipesSection = document.querySelector(".all-recipes");
@@ -69,13 +45,14 @@ const favoritesSearchbar = document.querySelector(".favorites-searchbar")
 const toCookButtonArea = document.querySelector(".to-cook-button-area")
 const viewToCookFromFavorites = document.querySelector(".recipes-to-cook-from-favorites-btn")
 
-window.onload = displayNewImages()
-
 viewAllButton.addEventListener('click', viewAllRecipes)
+
 homeButton.addEventListener('click', goHome)
+
 allRecipeList.addEventListener("click", (event) => {
   displayRecipe(event);
 })
+
 displayRecipeSection.addEventListener("click", (event) => {
   addRecipeToFavorites(event);
 })
@@ -85,6 +62,7 @@ viewToCookFromFavorites.addEventListener("click", displayRecipesToCookArea)
 toCookButtonArea.addEventListener("click", addRecipesToCook)
 
 favoritesAreaButton.addEventListener('click', displayFavoriteRecipeArea)
+
 recipesToCookButton.addEventListener('click', displayRecipesToCookArea)
 
 favoriteRecipeArea.addEventListener('click', (event) => {
@@ -94,23 +72,26 @@ favoriteRecipeArea.addEventListener('click', (event) => {
 recipesToCookArea.addEventListener("click", (event) => {
   displayRecipe(event);
 })
+
 filterButton.addEventListener('click', (event) => {
   filterRecipes(event);
 })
+
 filteredByTagArea.addEventListener('click', (event) => {
   displayRecipe(event);
 })
+
 filterFavoritesBtn.addEventListener('click', (event) => {
   filterFavoriteRecipes(event)
 })
-
 
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
 
 function displayNewImages() {
-  const images = recipes.map((recipe) => {
+  console.log('recipes', recipes)
+  const images = recipes.recipeData.map((recipe) => {
     return recipe.image;
   })
 
@@ -121,6 +102,8 @@ function displayNewImages() {
 }
 
 function viewAllRecipes() {
+console.log('recipes', recipes)
+console.log('recipeRepo', recipeRepo)
     recipesToCookArea.classList.add("hidden")
   toCookButtonArea.classList.add("hidden")
 allRecipeList.innerHTML = ""
@@ -128,7 +111,7 @@ filterFavoritesArea.classList.add("hidden")
 foodImagesSection.classList.add("hidden");
 allRecipesSection.classList.remove("hidden");
 viewAllButton.classList.add("hidden");
-recipeRepo.data.forEach((recipe) => {
+recipeRepo.data.recipeData.forEach((recipe) => {
   allRecipeList.innerHTML += `<li class="recipe-in-list" id=${recipe.id}>${recipe.name}</li>`
 })
 }
@@ -141,7 +124,7 @@ function searchRecipe() {
     filteredByTagArea.innerHTML = ''
     let searchInput = document.querySelector('.searchbar').value
     searchInput = searchInput.toLowerCase();
-    recipeRepo.data.forEach((recipe) => {
+    recipeRepo.data.recipeData.forEach((recipe) => {
         if (recipe.name.toLowerCase().includes(searchInput)) {
             createFilteredArea();
         filteredByTagArea.innerHTML += `
@@ -155,7 +138,6 @@ function searchRecipe() {
 const favoriteSearchBtn = document.querySelector('.favorite-search-btn')
 
 favoriteSearchBtn.addEventListener('click', searchFavoriteRecipe)
-
 
 function searchFavoriteRecipe() {
     filteredByTagArea.innerHTML = ''
@@ -206,7 +188,7 @@ function createFilteredArea() {
   }
 
 function populateRecipeArea() {
-  recipeRepo.data.forEach((recipe) => {
+  recipeRepo.data.recipeData.forEach((recipe) => {
     let newRecipeId = recipe.id + 1;
     let newRecipeId2 = recipe.id + 2;
     if(event.target.id === recipe.id.toString()) {
@@ -281,7 +263,7 @@ function displayRecipesToCookArea() {
 }
 
 function addRecipeToFavorites(event) {
-  recipeRepo.data.forEach((recipe) => {
+  recipeRepo.data.recipeData.forEach((recipe) => {
     if(event.target.id === recipe.id.toString() && !user.favoriteRecipes.includes(recipe)) {
       user.favoriteRecipe(recipe)
         favoriteRecipeArea.innerHTML = ''
@@ -296,7 +278,7 @@ function addRecipeToFavorites(event) {
 }
 
 function addRecipesToCook(event) {
-  recipeRepo.data.forEach((recipe) => {
+  recipeRepo.data.recipeData.forEach((recipe) => {
     let recipeId2 = recipe.id + 2;
     if(event.target.id === recipeId2.toString() && !user.recipesToCook.includes(recipe)) {
       user.decideToCook(recipe)
@@ -345,8 +327,6 @@ function filterFavoriteRecipes(event) {
     return recipeTags
   })
 }
-
-
 
 function goHome() {
   filterFavoritesArea.classList.add("hidden")
