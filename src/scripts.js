@@ -1,31 +1,20 @@
 import './styles.css';
 import apiCalls from './apiCalls';
+import getData from './apiCalls';
 import './images/turing-logo.png'
 import Recipe from './classes/Recipe.js'
 import User from './classes/User.js'
 import RecipeRepository from './classes/RecipeRepository.js'
-const fetchAll = () => {
-  Promise.all([fetchusers(), fetchrecipes(), fetchingredients()])}
-// import ingredients from './data/ingredients.js'
-// import recipes from './data/recipes.js'
-// import users from './data/users.js'
-let users = `https://what-s-cookin-starter-kit.herokuapp.com/api/v1/users`
-let ingredients = `https://what-s-cookin-starter-kit.herokuapp.com/api/v1/ingredients`
-let recipes = `https://what-s-cookin-starter-kit.herokuapp.com/api/v1/recipes`
 
-let userDataTest = [];
-Promise.all([
-  fetch(users)
-  .then(response => response.json())
-  .then(data => userDataTest.push(data)),
-  fetch(ingredients) 
-  .then(response => response.json()),
-  // .then(data => console.log('ingredients', data)), 
-  fetch(recipes)
-  .then(response => response.json())
-  // .then(data => console.log('recipe', data))
-])
-console.log('Test', userDataTest)
+let userData = []
+let ingredientData = []
+let recipeData = []
+
+
+
+getData().then(data => () => {
+  
+})
 
 
 const user = new User(users.usersData[getRandomIndex(users.usersData)])
