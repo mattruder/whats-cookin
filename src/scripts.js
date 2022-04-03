@@ -6,15 +6,39 @@ import Recipe from './classes/Recipe.js'
 import User from './classes/User.js'
 import RecipeRepository from './classes/RecipeRepository.js'
 
-let userData = []
-let ingredientData = []
-let recipeData = []
+let allData = []
 
 
 
-getData().then(data => () => {
-  
+getData().then(data => (allData.push(data)))
+
+const filterAllData = allData.forEach((array) => {
+  array.forEach((obj) => {
+
+  })
 })
+
+let alpha = allData[0]
+let beta = alpha
+console.log('allData', allData)
+console.log('tester', alpha)
+// console.log('allData next', allData['usersData'])
+
+
+
+let allDataMod = allData[0]['userData']
+console.log('allDataMod', allDataMod)
+// console.log('allData', allDataMod)
+
+
+// let userData = allDataMod[0]
+// let ingredientData = allData[1].ingredientsData
+// let recipeData = allData[2].recipeData
+
+// console.log(userData)
+// console.log(ingredientData)
+// console.log(recipeData)
+
 
 
 const user = new User(users.usersData[getRandomIndex(users.usersData)])
