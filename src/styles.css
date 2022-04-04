@@ -29,15 +29,13 @@ header {
   align-items: center;
   justify-content: space-around;
   height: 150px;
+  border-bottom: 1px solid black;
 }
 
 body {
   height: 100vh;
   margin: 0;
   font-family: sans-serif;
-}
-
-.all-recipe-searchbar, .favorites-searchbar {
 }
 
 li {
@@ -70,6 +68,12 @@ button:hover {
  box-shadow: 4px;
  border-radius: 5px;
 }
+
+.search-btn, .favorites-btn, .recipes-to-cook-btn,
+.favorite-search-btn, .recipes-to-cook-from-favorites-btn {
+  background-color: white;
+}
+
 .searchbar, .favorite-searchbar {
   padding: 10px;
   box-shadow: 4px;
@@ -139,12 +143,17 @@ button:hover {
   flex-wrap: wrap;
 }
 
+.all-recipes, .filter-favorites-dropdown {
+  padding-top: 10px;
+}
+
 .home-btn {
   cursor: pointer;
 }
 
 
-.recipe-in-list:hover, .favorite-recipe-styling:hover, .recipes-to-cook-styling:hover {
+.recipe-in-list:hover, .favorite-recipe-styling:hover,
+.recipes-to-cook-styling:hover, .filtered-by-tag-area:hover {
   cursor: pointer;
   opacity: .7;
 }
