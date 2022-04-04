@@ -12,23 +12,23 @@ const getData = () => {
         fetchRecipes()
     ])
 }
-    
+
 const fetchUserData = () => {
     return fetch(users)
     .then(response => response.json())
-    // .catch(err => console.log('ERROR'))
+    .catch(err => console.log('ERROR'))
 }
 
 const fetchIngredient = () => {
     return fetch(ingredients)
     .then(response => response.json())
-    // .catch(err => console.log('ERROR'))
+    .catch(err => console.log('ERROR'))
 }
 
 const fetchRecipes = () => {
     return fetch(recipes)
     .then(response => response.json())
-    // .catch(err => console.log('ERROR'))
+    .catch(err => console.log('ERROR'))
 }
 
 
