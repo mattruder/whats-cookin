@@ -1,12 +1,11 @@
 import './styles.css';
 import apiCalls from './apiCalls';
 import getData from './apiCalls';
-import './images/turing-logo.png';
 import Recipe from './classes/Recipe.js';
 import User from './classes/User.js';
 import RecipeRepository from './classes/RecipeRepository.js';
 
-let allData = []
+let allData = [];
 let userData;
 let user;
 let recipeRepo;
@@ -48,43 +47,35 @@ const toCookButtonArea = document.querySelector(".to-cook-button-area");
 const viewToCookFromFavorites = document.querySelector(".recipes-to-cook-from-favorites-btn");
 const homePageStyling = document.querySelector(".home-page-styling");
 const filteredRecipeStyling = document.querySelector(".filtered-recipe-styling");
+const searchBtn = document.querySelector('.search-btn');
+const favoriteSearchBtn = document.querySelector(".favorite-search-btn");
 
 viewAllButton.addEventListener("click", viewAllRecipes);
-
 homeButton.addEventListener("click", goHome);
-
+searchBtn.addEventListener("click", searchRecipe);
+favoriteSearchBtn.addEventListener("click", searchFavoriteRecipe);
 allRecipeList.addEventListener("click", (event) => {
   displayRecipe(event);
 });
-
 displayRecipeSection.addEventListener("click", (event) => {
   addRecipeToFavorites(event);
 });
-
 viewToCookFromFavorites.addEventListener("click", displayRecipesToCookArea);
-
 toCookButtonArea.addEventListener("click", addRecipesToCook);
-
 favoritesAreaButton.addEventListener("click", displayFavoriteRecipeArea);
-
 recipesToCookButton.addEventListener("click", displayRecipesToCookArea);
-
 favoriteRecipeArea.addEventListener("click", (event) => {
   displayRecipe(event);
 });
-
 recipesToCookArea.addEventListener("click", (event) => {
   displayRecipe(event);
 });
-
 filterButton.addEventListener("click", (event) => {
   filterRecipes(event);
 });
-
 filteredByTagArea.addEventListener("click", (event) => {
   displayRecipe(event);
 });
-
 filterFavoritesBtn.addEventListener("click", (event) => {
   filterFavoriteRecipes(event)
 });
@@ -105,25 +96,22 @@ function displayNewImages() {
 };
 
 function viewAllRecipes() {
-recipesToCookArea.classList.add("hidden")
-toCookButtonArea.classList.add("hidden")
-allRecipeList.innerHTML = ""
-filterFavoritesArea.classList.add("hidden")
-foodImagesSection.classList.add("hidden");
-allRecipesSection.classList.remove("hidden");
-viewAllButton.classList.add("hidden");
-displayRecipeSection.classList.add("hidden")
-filteredByTagArea.classList.add("hidden")
-allRecipeSearchbar.classList.remove("hidden");
-favoritesSearchbar.classList.add("hidden");
-recipeRepo.data.recipeData.forEach((recipe) => {
-allRecipeList.innerHTML += `<li class="recipe-in-list" id=${recipe.id}>${recipe.name}</li>`
-})
+  recipesToCookArea.classList.add("hidden")
+  toCookButtonArea.classList.add("hidden")
+  allRecipeList.innerHTML = ""
+  filterFavoritesArea.classList.add("hidden")
+  foodImagesSection.classList.add("hidden");
+  allRecipesSection.classList.remove("hidden");
+  viewAllButton.classList.add("hidden");
+  displayRecipeSection.classList.add("hidden")
+  filteredByTagArea.classList.add("hidden")
+  allRecipeSearchbar.classList.remove("hidden");
+  favoritesSearchbar.classList.add("hidden");
+  favoriteRecipeArea.classList.add("hidden");
+  recipeRepo.data.recipeData.forEach((recipe) => {
+    allRecipeList.innerHTML += `<li class="recipe-in-list" id=${recipe.id}>${recipe.name}</li>`
+  })
 };
-
-const searchBtn = document.querySelector('.search-btn');
-
-searchBtn.addEventListener("click", searchRecipe);
 
 function searchRecipe() {
     filteredByTagArea.innerHTML = ""
@@ -139,10 +127,6 @@ function searchRecipe() {
     })
     document.querySelector(".searchbar").value = ''
 };
-
-const favoriteSearchBtn = document.querySelector(".favorite-search-btn");
-
-favoriteSearchBtn.addEventListener("click", searchFavoriteRecipe);
 
 function searchFavoriteRecipe() {
     filteredByTagArea.innerHTML = ''
@@ -268,7 +252,7 @@ function displayRecipesToCookArea() {
   favoritesSearchbar.classList.add("hidden");
   toCookButtonArea.classList.add("hidden");
   filteredByTagArea.classList.add("hidden");
-}
+};
 
 function addRecipeToFavorites(event) {
   recipeRepo.data.recipeData.forEach((recipe) => {
@@ -306,7 +290,7 @@ function addRecipesToCook(event) {
 
 function updateFavoritesArea() {
   favoriteRecipeArea.innerHTML = ""
-user.favoriteRecipes.forEach((favoriteRecipe) => {
+  user.favoriteRecipes.forEach((favoriteRecipe) => {
   favoriteRecipeArea.innerHTML += `
   <div class="favorite-recipe-styling">
   <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
