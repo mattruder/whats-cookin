@@ -194,7 +194,6 @@ function createFilteredArea() {
 };
 
 function populateRecipeArea() {
-  console.log(ingredientsData)
   recipeRepo.data.recipeData.forEach((recipe) => {
     let newRecipeId = recipe.id + 1;
     let newRecipeId2 = recipe.id + 2;
