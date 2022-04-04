@@ -44,6 +44,8 @@ const allRecipeSearchbar = document.querySelector(".all-recipe-searchbar")
 const favoritesSearchbar = document.querySelector(".favorites-searchbar")
 const toCookButtonArea = document.querySelector(".to-cook-button-area")
 const viewToCookFromFavorites = document.querySelector(".recipes-to-cook-from-favorites-btn")
+const homePageStyling = document.querySelector(".home-page-styling")
+const filteredRecipeStyling = document.querySelector(".filtered-recipe-styling")
 
 viewAllButton.addEventListener('click', viewAllRecipes)
 
@@ -111,8 +113,9 @@ filterFavoritesArea.classList.add("hidden")
 foodImagesSection.classList.add("hidden");
 allRecipesSection.classList.remove("hidden");
 viewAllButton.classList.add("hidden");
+displayRecipeSection.classList.add("hidden")
 recipeRepo.data.recipeData.forEach((recipe) => {
-  allRecipeList.innerHTML += `<li class="recipe-in-list" id=${recipe.id}>${recipe.name}</li>`
+allRecipeList.innerHTML += `<li class="recipe-in-list" id=${recipe.id}>${recipe.name}</li>`
 })
 }
 
@@ -161,10 +164,12 @@ function displayRecipe(event) {
 
 function createRecipeArea() {
   filterFavoritesArea.classList.add("hidden")
+  //
   foodImagesSection.classList.add("hidden");
   allRecipesSection.classList.add("hidden");
   favoriteRecipeArea.classList.add("hidden")
-  viewAllButton.classList.add("hidden");
+  homePageStyling.classList.add("hidden");
+  viewAllButton.classList.remove("hidden");
   displayRecipeSection.classList.remove("hidden")
   displayRecipeSection.innerHTML = ''
   toCookButtonArea.innerHTML = ''
@@ -172,7 +177,7 @@ function createRecipeArea() {
   allRecipeSearchbar.classList.remove("hidden");
   favoritesSearchbar.classList.add("hidden");
   toCookButtonArea.classList.remove("hidden")
-    recipesToCookArea.classList.add("hidden")
+  recipesToCookArea.classList.add("hidden")
 }
 
 function createFilteredArea() {
@@ -180,11 +185,11 @@ function createFilteredArea() {
   foodImagesSection.classList.add("hidden");
   allRecipesSection.classList.add("hidden");
   favoriteRecipeArea.classList.add("hidden")
-  viewAllButton.classList.add("hidden");
   displayRecipeSection.classList.add("hidden")
   displayRecipeSection.innerHTML = ''
   filteredByTagArea.classList.remove("hidden")
   toCookButtonArea.classList.add("hidden")
+  viewAllButton.classList.remove("hidden");
   }
 
 function populateRecipeArea() {
@@ -203,10 +208,12 @@ function populateRecipeArea() {
         return instruction.instruction
       }).flat()
       displayRecipeSection.innerHTML += `
-      <img src="${recipeToDisplay.image}">
+      <img class="recipe-main-image" src="${recipeToDisplay.image}">
       <h1>${recipeToDisplay.name}</h1>
+      <div class="favorite-btn-area">
       <button class="favorite-btn" id=${recipeToDisplay.id}>Favorite Recipe</button>
-      <h2>Cost: ${recipeCost}</h2>
+      </div>
+      <h2>Cost: $${recipeCost}</h2>
       <h3>Ingredients: </h3>
       <p>${officialIngredients}</p>
       <h3>Instructions: </h3>
@@ -236,7 +243,7 @@ function displayFavoriteRecipeArea() {
   foodImagesSection.innerHTML = ''
   foodImagesSection.classList.add("hidden");
   allRecipesSection.classList.add("hidden");
-  viewAllButton.classList.add("hidden");
+  viewAllButton.classList.remove("hidden");
   displayRecipeSection.classList.add("hidden");
   displayRecipeSection.innerHTML = '';
   filteredByTagArea.innerHTML= "";
@@ -252,7 +259,7 @@ function displayRecipesToCookArea() {
   foodImagesSection.innerHTML = ''
   foodImagesSection.classList.add("hidden");
   allRecipesSection.classList.add("hidden");
-  viewAllButton.classList.add("hidden");
+  viewAllButton.classList.remove("hidden");
   displayRecipeSection.classList.add("hidden");
   displayRecipeSection.innerHTML = ''
   favoriteRecipeArea.classList.add("hidden")
@@ -287,8 +294,10 @@ function addRecipesToCook(event) {
         recipesToCookArea.innerHTML = ''
       user.recipesToCook.forEach((recipeToCook) => {
         recipesToCookArea.innerHTML += `
+        <div class="recipes-to-cook-styling">
         <h1 id=${recipeToCook.id}>${recipeToCook.name}</h1>
-          `
+        </div>
+        `
       })
     }
   })
@@ -298,8 +307,10 @@ function updateFavoritesArea() {
   favoriteRecipeArea.innerHTML = ''
 user.favoriteRecipes.forEach((favoriteRecipe) => {
   favoriteRecipeArea.innerHTML += `
+  <div class="favorite-recipe-styling">
   <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
   <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
+  </div>
     `
 })
 }
@@ -310,7 +321,9 @@ function filterRecipes(event) {
       if(filterDropdown.value === recipeTag) {
         createFilteredArea();
         filteredByTagArea.innerHTML += `
+        <div class="filtered-recipe-styling">
         <h1 id=${recipe.id}>${recipe.name}</h1>
+        </div>
         `      }
     })
     return recipeTags
@@ -323,7 +336,9 @@ function filterFavoriteRecipes(event) {
       if(filterDropdown1.value === recipeTag) {
         createFilteredArea();
         filteredByTagArea.innerHTML += `
+        <div class="filtered-recipe-styling">
         <h1 id=${recipe.id}>${recipe.name}</h1>
+        </div>
         `      }
     })
     return recipeTags
@@ -345,5 +360,6 @@ function goHome() {
   allRecipeSearchbar.classList.remove("hidden");
   favoritesSearchbar.classList.add("hidden");
   toCookButtonArea.classList.add("hidden")
-    recipesToCookArea.classList.add("hidden")
+  recipesToCookArea.classList.add("hidden")
+  homePageStyling.classList.remove("hidden");
 }

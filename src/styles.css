@@ -1,5 +1,5 @@
 * {
-  border: 2px solid black;
+  /* border: 2px solid black; */
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -15,8 +15,10 @@ html {
 }
 
 .food-images-section > img {
-  height: 250px;
-  width: 250px;
+  height: 200px;
+  width: 280px;
+  border: 1px solid black;
+  shadow: 10px;
 }
 
 header {
@@ -26,15 +28,40 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  height: 150px
+  height: 150px;
 }
 
 body {
   height: 100vh;
   margin: 0;
+  font-family: sans-serif;
 }
 
 .all-recipe-searchbar, .favorites-searchbar {
+}
+
+li {
+  list-style-type: none;
+}
+button {
+  padding: 10px;
+  box-shadow: 4px;
+  border-radius: 5px;
+}
+
+button:hover {
+  cursor: pointer;
+  opacity: .7;
+}
+
+.display-recipe > h1, h2, h3, p, {
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 10px;
+}
+.recipe-main-image {
+  border: 1px solid black;
+  shadow: 10px;
 }
 
 .search-btn, .favorites-btn, .recipes-to-cook-btn,
@@ -61,17 +88,30 @@ body {
   border-radius: 5px;
 }
 
+.to-cook-button-area, .favorite-btn-area {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
 .below-food-images {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding-top: 100px;
+  padding-top: 10px;
+}
+.home-page-styling {
+  padding-top: 90px;
 }
 
-.favorite-recipe-styling {
+.favorite-recipe-styling, .recipes-to-cook-styling, .filtered-recipe-styling {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 10px;
+
 }
 .filter-favorites-dropdown > button, select, label {
   /* height: 50px; */
@@ -80,7 +120,7 @@ body {
   border-radius: 5px;
 }
 
-.filter-recipe-btn {
+.filter-recipe-btn, .filter-recipes-btn {
   padding: 10px;
   box-shadow: 4px;
   border-radius: 5px;
@@ -93,7 +133,8 @@ body {
 .all-recipe-list {
   display: flex;
   align-items: left;
-  justify-content: left;
+  margin-left: 35%;
+  justify-content: center;
   flex-direction: column;
   flex-wrap: wrap;
 }
@@ -102,8 +143,10 @@ body {
   cursor: pointer;
 }
 
-.recipe-in-list {
+
+.recipe-in-list:hover, .favorite-recipe-styling:hover, .recipes-to-cook-styling:hover {
   cursor: pointer;
+  opacity: .7;
 }
 
 .display-recipe {
@@ -111,6 +154,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-top: 10px;
 }
 
 .hidden {
