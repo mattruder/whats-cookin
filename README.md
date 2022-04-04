@@ -1,6 +1,6 @@
 # What's Cookin
 
-What's Cookin is a meal planning application that allows users to view their favorite recipes, view the ingredients to make the recipes, and total cost of the recipes are. Users can discover new recipes and can choose what recipes to cook.
+What's Cookin is a meal planning application that allows users to view their favorite recipes, view the ingredients to make the recipes, and the total cost of the recipes are. Users can discover new recipes and can choose what recipes to cook.
 
 ### **Downloading the files**
 
@@ -33,35 +33,33 @@ You should see a similar screen below.
 ![View Website](https://user-images.githubusercontent.com/89413678/161453609-03cf671a-359b-4668-af50-85df2e7f1f25.png)
 
 
-<!-- ADD GIF ON PASTING AND SHOWING THE HOMEPAGE OF WEBSITE -->
+![Apr-04-2022 12-59-10](https://user-images.githubusercontent.com/89413678/161613465-39ba2c2e-02b6-4637-ad44-c989faac7f7e.gif)
 
 
 ### **Using the Application**
 
 **_To See All Recipes_**
-
 To see all recipes, users can click on the `View All Recipes` button. This will take them to a list of all the recipes. 
 
 **_Favorite a Recipe_**
-
-To favorite a recipe, the user can click on a recipe in the `View All Recipes` page and then click on the button `Favorite Recipe`. 
-<!-- Add image -->
+To favorite a recipe after the user clicks on a recipe in the `View All Recipes` page, the user can click on the button `Favorite Recipe`. 
 
 Users should now be able to view their favorite recipes when clicking on the `Favorites` button in the top right corner of the page. 
-<!-- Add Gif -->
+
+![Apr-04-2022 13-14-07](https://user-images.githubusercontent.com/89413678/161615503-0aaacf1d-a52d-4379-a2d9-61ea6c6dfa35.gif)
 
 **_To Unfavorite a Recipe_**
-
 To unfavorite a recipe, the user can click on the 
-and click the `Unfavorite` button. Now, the recipe will be removed from the user's Favorites list.
+and click the `Unfavorite` button in their `Favorite` page. The recipe will be removed from the user's Favorites list.
+
+![Apr-04-2022 13-16-34](https://user-images.githubusercontent.com/89413678/161615917-bf656e6d-f246-496e-86e0-a223f38eedbc.gif)
 
 **_Add a Recipes to Cook_**
-
-To add a recipe to cook, the user can click on a recipe in the `View All Recipes` page and then click on the button `Add to My Cook List`.
-<!-- Add image -->
+To add a recipe to cook, after the user clicks on a recipe in the `View All Recipes` page, the user can click on the button `Add to My Cook List`.
 
 Users should now be able to view the recipe they want to cook when clicking on the `Recipes to Cook` button.
-<!-- add Gif -->
+
+![Apr-04-2022 13-19-48](https://user-images.githubusercontent.com/89413678/161616433-68134cea-a5b3-42f2-bbe6-04c6056c20aa.gif)
 
 ### **To Close Down the Application**
 
@@ -86,8 +84,8 @@ In the terminal where the app is running, use `control` + `c` to stop the applic
 
 
 ### **Contributors**
-- Nathan Hodnett [GitHub](https://github.com/nhodnett)
 - Matt Ruder [GitHub](https://github.com/mattruder)
+- Nathan Hodnett [GitHub](https://github.com/nhodnett)
 - Nicholas Ao [GitHub](https://github.com/aominhlong)
 
 
@@ -95,4 +93,4 @@ In the terminal where the app is running, use `control` + `c` to stop the applic
 - Allow users to remove recipe to cook functionality
 - Allow users to filter using multiple tags
 - Add a rating system so users can rate the recipe
-
+- When user clicks on a image on the main page, it will take them to the image recipe page
