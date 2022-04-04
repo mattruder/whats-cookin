@@ -1,19 +1,18 @@
-import ingredientsData from '../data/ingredients.js';
-
 class Recipe {
-  constructor(recipe) {
+  constructor(recipe, ingredientsData) {
     this.name = recipe.name;
     this.id = recipe.id
     this.image = recipe.image;
     this.ingredients = recipe.ingredients;
     this.tags = recipe.tags;
     this.ingredientsList ;
-    this.instructions = recipe.instructions
+    this.instructions = recipe.instructions;
+    this.ingredientsData = ingredientsData;
   }
 
 createIngredientList() {
   let recipeIngredientIds = this.ingredients.map((recipeIngredient) => {
-    let filteredIngredients = ingredientsData.filter((ingredientData) => {
+    let filteredIngredients = this.ingredientsData.ingredientsData.filter((ingredientData) => {
       if(ingredientData.id === recipeIngredient.id) {
         return ingredientData
       }

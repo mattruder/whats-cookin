@@ -11,10 +11,12 @@ let userData;
 let user;
 let recipeRepo;
 let recipes;
+let ingredientsData;
 
 getData().then(data => (allData.push(data)))
 .then(data => userData = allData[0][0])
 .then(data => user = new User(userData['usersData'][getRandomIndex(userData['usersData'])]))
+.then(data => ingredientsData = allData[0][1])
 .then(data => recipes = allData[0][2])
 .then(data => recipeRepo = new RecipeRepository(recipes))
 .then(data => displayNewImages())
@@ -192,11 +194,12 @@ function createFilteredArea() {
 };
 
 function populateRecipeArea() {
+  console.log(ingredientsData)
   recipeRepo.data.recipeData.forEach((recipe) => {
     let newRecipeId = recipe.id + 1;
     let newRecipeId2 = recipe.id + 2;
     if(event.target.id === recipe.id.toString()) {
-      let recipeToDisplay = new Recipe(recipe)
+      let recipeToDisplay = new Recipe(recipe, ingredientsData)
       let recipeCost = recipeToDisplay.getRecipeCost()
       recipeToDisplay.createIngredientList()
       const officialIngredients = recipeToDisplay.ingredientsList.map((ingredient) => {
