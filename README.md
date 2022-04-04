@@ -1,16 +1,96 @@
-# What's Cookin'? Starter Kit
+# What's Cookin
 
-The details of this project are outlined in the <a href="https://frontend.turing.edu/projects/What%27sCookin-PartOne.html" target="\__blank">project spec</a>.
+What's Cookin is a meal planning application that allows users to view their favorite recipes, view the ingredients to make the recipes, and the total cost of the recipes are. Users can discover new recipes and can choose what recipes to cook.
 
-## Set Up
+### **Downloading the files**
 
-1. Within your group, decide on one person to have the project repository on their Github account. This person will *fork* this repository - on the top right corner of the page, click the fork button.
-2. All group members should then clone down the forked repository (make sure that everyone is added as a collaborator as well). Since you don't want your project to be named "whats-cookin-starter-kit", add an optional argument after the repo url when cloning. The command should look like this: `git clone [remote-address] [what you want to name the repo]`.
-3. Once you have cloned the repo, change into the directory and install the project dependencies. Run `npm install` or `npm i` to install project dependencies.
-4. Run npm start in the terminal to see the HTML page (you should see some boilerplate HTML displayed on the page). `Control + C` is the command to stop running the local server. Closing the terminal without stopping the server first could allow the server to continue to run in the background and cause problems. This command is not specific to Webpack; make note of it for future use.
-5. Make sure both members of your team are collaborators on the forked repo.
-6. Do not run `npm audit fix --force`. This will update to the latest version of packages. We need to be using `webpack-dev-server@3.11.2` which is not the latest version. If you start to run into Webpack errors, first check that all group members are using the correct version.
+1. click on this [link](https://github.com/mattruder/whats-cookin-starter-kit)
 
-## Testing
+2. hit this green box that says `Code`
 
-Mocha and chai are already set up, with a boilerplate test for you.
+![green box](https://user-images.githubusercontent.com/89413678/161453090-3fb52412-8b7f-4c8e-b7f6-359a83db5114.png)
+
+3. Copy the SSH
+
+![Copy SSH](https://user-images.githubusercontent.com/89413678/161453094-154b45dd-f6bf-4883-bfeb-4df1890f256b.png)
+
+4. Open the terminal
+5. Type `git clone` + paste the SSH link
+
+![Apr-03-2022 19-41-26](https://user-images.githubusercontent.com/89413678/161460429-1cde31b2-081d-490c-a63c-5e4f9f6980fd.gif)
+
+
+### **To Run the Application and View the Webpage**
+
+1. In the main-directory, run `npm start`
+
+You should see a similar screen below. 
+
+![View Website](https://user-images.githubusercontent.com/89413678/161453492-049643ab-135d-4d7a-a86a-7802d8468ac8.png)
+
+2. To view the webpage, copy and paste the first link in your console under `webpack server` into the input field in the window. 
+
+![View Website](https://user-images.githubusercontent.com/89413678/161453609-03cf671a-359b-4668-af50-85df2e7f1f25.png)
+
+
+![Apr-04-2022 12-59-10](https://user-images.githubusercontent.com/89413678/161613465-39ba2c2e-02b6-4637-ad44-c989faac7f7e.gif)
+
+
+### **Using the Application**
+
+**_To See All Recipes_**
+To see all recipes, users can click on the `View All Recipes` button. This will take them to a list of all the recipes. 
+
+**_Favorite a Recipe_**
+To favorite a recipe after the user clicks on a recipe in the `View All Recipes` page, the user can click on the button `Favorite Recipe`. 
+
+Users should now be able to view their favorite recipes when clicking on the `Favorites` button in the top right corner of the page. 
+
+![Apr-04-2022 13-14-07](https://user-images.githubusercontent.com/89413678/161615503-0aaacf1d-a52d-4379-a2d9-61ea6c6dfa35.gif)
+
+**_To Unfavorite a Recipe_**
+To unfavorite a recipe, the user can click on the 
+and click the `Unfavorite` button in their `Favorite` page. The recipe will be removed from the user's Favorites list.
+
+![Apr-04-2022 13-16-34](https://user-images.githubusercontent.com/89413678/161615917-bf656e6d-f246-496e-86e0-a223f38eedbc.gif)
+
+**_Add a Recipes to Cook_**
+To add a recipe to cook, after the user clicks on a recipe in the `View All Recipes` page, the user can click on the button `Add to My Cook List`.
+
+Users should now be able to view the recipe they want to cook when clicking on the `Recipes to Cook` button.
+
+![Apr-04-2022 13-19-48](https://user-images.githubusercontent.com/89413678/161616433-68134cea-a5b3-42f2-bbe6-04c6056c20aa.gif)
+
+### **To Close Down the Application**
+
+In the terminal where the app is running, use `control` + `c` to stop the application.
+
+### **Technologies Used**
+- JavaScript
+- Mocha
+- Chai
+- Webpack
+- CSS
+- HTML
+
+### **Challenges**
+-  One of the challenges of developing this app was implementing the fetch API to access the data being used in the app. We were able to access the data but not able to access it at the appropriate time.
+- Another challenge was having so many elements in this project. This was by far the largest project that we have done to date and there was a big learning curve. 
+
+### **Wins**
+- We figured out the first challenge above by using `.this` and learned how to use `Promise.all()` effectively. 
+- We also learned how to do asynchronous development.
+- Test driven development is extremely effective. 
+
+
+### **Contributors**
+- Matt Ruder [GitHub](https://github.com/mattruder)
+- Nathan Hodnett [GitHub](https://github.com/nhodnett)
+- Nicholas Ao [GitHub](https://github.com/aominhlong)
+
+
+### **Future Additions**
+- Allow users to remove recipe to cook functionality
+- Allow users to filter using multiple tags
+- Add a rating system so users can rate the recipe
+- When user clicks on a image on the main page, it will take them to the image recipe page
