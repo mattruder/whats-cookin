@@ -7,7 +7,8 @@ describe('Pantry', () => {
     let pantry;
     let recipe;
     beforeEach(() => {
-        user =
+         
+    const userInfo =
             {
               "name": "Saige O'Kon",
               "id": 1,
@@ -34,6 +35,7 @@ describe('Pantry', () => {
                 }
                ]
             }
+        user = new User(userInfo)
         pantry = new Pantry(user)
         recipe = {
             "id": 678353,
@@ -53,6 +55,13 @@ describe('Pantry', () => {
                   "unit": ""
                 }
               },
+              // {
+              //   "id": 8901,
+              //   "quantity": {
+              //     "amount": 1,
+              //     "unit": "tablespoon"
+              //   }
+              // },
               {
                 "id": 20027,
                 "quantity": {
@@ -89,5 +98,16 @@ describe('Pantry', () => {
     it(`Should contain the user's ingredients`, () => {
         expect(pantry.ingredients).to.deep.equal(user.pantry)
     })
+
+    it(`Should determine whether a user's pantry has enough ingredients`, () => {
+        user.decideToCook(recipe)
+        // console.log(user)
+        pantry.determineIngredients(678353)
+
+        expect(pantry.enoughIngredients).to.equal(true)
+        expect(pantry.determineIngredients()).to.equal('You have enough ingredients')
+    })
+
+
 
 })
