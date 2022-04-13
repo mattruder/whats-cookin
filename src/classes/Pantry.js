@@ -6,20 +6,23 @@ class Pantry {
     }
 
     determineIngredients(recipeId) {
-        //check if recipe is the same
-        var correctRecipe = []
+        let pantryIngredientsForRecipe = []
+        let returnStatement;
         let pantryIngredientArray = [];
         this.recipesToCook.forEach((recipe) => {
             if(recipe.id === recipeId) {
-                console.log('recipe')
-            correctRecipe.push(recipe)
+
             let recipeIngredients = recipe.ingredients.map((recipeIngredient) => {
                 return recipeIngredient.id
             })
-                // check if ingredients match inside the pantry  based off id num
-                // iterate through recipeIngredient array --> if pantry ingredient id matches
-                // recipe ingredient id's ** .includes() ** move on to next step to check quantity
-              
+            recipeIngredients.forEach((ingredientInTheRecipe) => {
+              this.ingredients.forEach((ingredientInThePantry) => {
+                if(ingredientInTheRecipe === ingredientInThePantry.ingredient) {
+                  pantryIngredientsForRecipe.push(ingredientInThePantry)
+                }
+              })
+
+            })
             let checkRecipeId = recipeIngredients.forEach((ingredientId) => {
                 let pantryArray = this.ingredients.map((ingredient) => {
                     return ingredient.ingredient
@@ -29,19 +32,32 @@ class Pantry {
                 } else {
                     pantryIngredientArray.push('No')
                 }
-                // console.log('check', pantryIngredientArray)
             })
         }
+
+        if (pantryIngredientArray.includes('No')) {
+            returnStatement = 'You do not have enough ingredients to cook this recipe.'
+        } else {
+          let doesItMatch = []
+            recipe.ingredients.forEach((ingredientInRecipe) => {
+              pantryIngredientsForRecipe.forEach((pantryIngredient) => {
+                if(ingredientInRecipe.id === pantryIngredient.ingredient && pantryIngredient.amount >= ingredientInRecipe.quantity.amount) {
+                  doesItMatch.push('Yes')
+                }
+                else {
+                  doesItMatch.push('No')
+                }
+              })
+            })
+            if (doesItMatch.includes('No')) {
+              returnStatement = 'You do not have enough ingredients to cook this recipe.'
+            } else {
+              returnStatement = 'You have enough ingredients'
+            }
+        }
        })
-    //    if (pantryIngredientArray.includes('No')) {
-    //        return 'You do not have enough ingredients to cook this recipe.'
-    //    } else {
-        //    console.log(this.recipesToCook)
-           console.log('correct recipe', correctRecipe)
-    //    }
-
+       return returnStatement
     }
-
 }
 
 

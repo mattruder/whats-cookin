@@ -7,7 +7,7 @@ describe('Pantry', () => {
     let pantry;
     let recipe;
     beforeEach(() => {
-         
+
     const userInfo =
             {
               "name": "Saige O'Kon",
@@ -15,15 +15,15 @@ describe('Pantry', () => {
               "pantry": [
                 {
                   "ingredient": 1009016,
-                  "amount": 1.5
-                },
-                {
-                  "ingredient": 9003,
                   "amount": 2
                 },
                 {
+                  "ingredient": 9003,
+                  "amount": 3
+                },
+                {
                   "ingredient": 20027,
-                  "amount": 1
+                  "amount": 2
                 },
                 {
                   "ingredient": 11215,
