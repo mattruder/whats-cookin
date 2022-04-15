@@ -101,11 +101,12 @@ describe('Pantry', () => {
 
     it(`Should determine whether a user's pantry has enough ingredients`, () => {
         user.decideToCook(recipe)
-        // console.log(user)
-        pantry.determineIngredients(678353)
+      console.log('user: ', user)
+
+// console.log('2nd user log: ', user)
 
         expect(pantry.enoughIngredients).to.equal(true)
-        expect(pantry.determineIngredients()).to.equal('You have enough ingredients')
+        expect(pantry.determineIngredients(678353)).to.equal('You have enough ingredients')
     })
 
 
