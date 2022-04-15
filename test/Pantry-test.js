@@ -32,7 +32,12 @@ describe('Pantry', () => {
                 {
                   "ingredient": 2047,
                   "amount": 6
-                }
+                },
+                {
+                  "ingredient": 8901,
+                  "amount": 1.5
+                  }
+
                ]
             }
         user = new User(userInfo)
@@ -55,13 +60,13 @@ describe('Pantry', () => {
                   "unit": ""
                 }
               },
-              // {
-              //   "id": 8901,
-              //   "quantity": {
-              //     "amount": 1,
-              //     "unit": "tablespoon"
-              //   }
-              // },
+              {
+                "id": 8901,
+                "quantity": {
+                  "amount": 1,
+                  "unit": "tablespoon"
+                }
+              },
               {
                 "id": 20027,
                 "quantity": {
