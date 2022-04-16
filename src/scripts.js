@@ -12,15 +12,47 @@ let recipeRepo;
 let recipes;
 let ingredientsData;
 
+const addToUserPantry = (ingredientToAdd) => {
+  fetch(`http://localhost:3001/api/v1/users`, {
+      method: 'POST',
+      body: JSON.stringify(ingredientToAdd),
+      headers: {
+          'Content-Type' : 'application/json'
+      }
+  })
+  .then(response => response.json())
+  .catch(err => console.log('ERROR'))
+}
+
+const removeFromUserPantry = (ingredientToRemove) => {
+  fetch(`http://localhost:3001/api/v1/users`, {
+  method: 'POST',
+  body: JSON.stringify(ingredientToRemove),
+  headers: {
+      'Content-Type' : 'application/json'
+  }
+})
+.then(response => response.json())
+.catch(err => console.log('ERROR'))
+}
+
 getData().then(data => {
   allData.push(data)
   userData = allData[0][0]
   ingredientsData = allData[0][1]
   recipes = allData[0][2]
-  user = new User(userData[getRandomIndex(userData)])
+  user = new User(userData[9])
   recipeRepo = new RecipeRepository(recipes)
   displayNewImages()
 })
+
+let postVar = {
+  "userID": 10,
+  "ingredientID": 1124,
+  "ingredientModification": -3
+}
+
+
 
 const viewAllButton = document.querySelector(".view-all-btn");
 const foodImagesSection = document.querySelector(".food-images-section");
@@ -51,6 +83,10 @@ const homePageStyling = document.querySelector(".home-page-styling");
 const filteredRecipeStyling = document.querySelector(".filtered-recipe-styling");
 const searchBtn = document.querySelector('.search-btn');
 const favoriteSearchBtn = document.querySelector(".favorite-search-btn");
+const myPantryBtn = document.querySelector(".my-pantry")
+const myPantryArea = document.querySelector(".my-pantry-area")
+
+myPantryBtn.addEventListener("click", viewMyPantry)
 
 viewAllButton.addEventListener("click", viewAllRecipes);
 homeButton.addEventListener("click", goHome);
@@ -114,6 +150,34 @@ function viewAllRecipes() {
     allRecipeList.innerHTML += `<li class="recipe-in-list" id=${recipe.id}>${recipe.name}</li>`
   })
 };
+
+function viewMyPantry() {
+  myPantryArea.classList.remove("hidden")
+  recipesToCookArea.classList.add("hidden")
+  toCookButtonArea.classList.add("hidden")
+  allRecipeList.innerHTML = ""
+  filterFavoritesArea.classList.add("hidden")
+  foodImagesSection.classList.add("hidden");
+  allRecipesSection.classList.add("hidden");
+  viewAllButton.classList.add("hidden");
+  displayRecipeSection.classList.add("hidden")
+  filteredByTagArea.classList.add("hidden")
+  allRecipeSearchbar.classList.remove("hidden");
+  favoritesSearchbar.classList.add("hidden");
+  favoriteRecipeArea.classList.add("hidden");
+
+    ingredientsData.forEach((ingredient) => {
+      user.pantry.forEach((ingredientInPantry) => {
+          if (ingredient.id === ingredientInPantry.ingredient) {
+            myPantryArea.innerHTML += `<li class="recipe-in-list" id=${ingredient.id}>${ingredient.name} amount: ${ingredientInPantry.amount}</li>`
+          }
+      })
+    })
+  
+  
+};
+
+
 
 function searchRecipe() {
     filteredByTagArea.innerHTML = ""
@@ -349,4 +413,8 @@ function goHome() {
   toCookButtonArea.classList.add("hidden");
   recipesToCookArea.classList.add("hidden");
   homePageStyling.classList.remove("hidden");
+  // removeFromUserPantry(postVar)
+  console.log(user)
+  console.log('recipe', ingredientsData)
 };
+
