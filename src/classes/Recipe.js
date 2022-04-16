@@ -12,7 +12,7 @@ class Recipe {
 
 createIngredientList() {
   let recipeIngredientIds = this.ingredients.map((recipeIngredient) => {
-    let filteredIngredients = this.ingredientsData.ingredientsData.filter((ingredientData) => {
+    let filteredIngredients = this.ingredientsData.filter((ingredientData) => {
       if(ingredientData.id === recipeIngredient.id) {
         return ingredientData
       }
