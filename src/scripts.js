@@ -12,13 +12,15 @@ let recipeRepo;
 let recipes;
 let ingredientsData;
 
-getData().then(data => (allData.push(data)))
-.then(data => userData = allData[0][0])
-.then(data => user = new User(userData['usersData'][getRandomIndex(userData['usersData'])]))
-.then(data => ingredientsData = allData[0][1])
-.then(data => recipes = allData[0][2])
-.then(data => recipeRepo = new RecipeRepository(recipes))
-.then(data => displayNewImages())
+getData().then(data => {
+  allData.push(data)
+  userData = allData[0][0]
+  ingredientsData = allData[0][1]
+  recipes = allData[0][2]
+  user = new User(userData[getRandomIndex(userData)])
+  recipeRepo = new RecipeRepository(recipes)
+  displayNewImages()
+})
 
 const viewAllButton = document.querySelector(".view-all-btn");
 const foodImagesSection = document.querySelector(".food-images-section");
@@ -85,7 +87,7 @@ function getRandomIndex(array) {
 };
 
 function displayNewImages() {
-  const images = recipes.recipeData.map((recipe) => {
+  const images = recipes.map((recipe) => {
     return recipe.image;
   });
 
@@ -108,7 +110,7 @@ function viewAllRecipes() {
   allRecipeSearchbar.classList.remove("hidden");
   favoritesSearchbar.classList.add("hidden");
   favoriteRecipeArea.classList.add("hidden");
-  recipeRepo.data.recipeData.forEach((recipe) => {
+  recipeRepo.data.forEach((recipe) => {
     allRecipeList.innerHTML += `<li class="recipe-in-list" id=${recipe.id}>${recipe.name}</li>`
   })
 };
@@ -117,7 +119,7 @@ function searchRecipe() {
     filteredByTagArea.innerHTML = ""
     let searchInput = document.querySelector(".searchbar").value
     searchInput = searchInput.toLowerCase();
-    recipeRepo.data.recipeData.forEach((recipe) => {
+    recipeRepo.data.forEach((recipe) => {
         if (recipe.name.toLowerCase().includes(searchInput)) {
             createFilteredArea();
         filteredByTagArea.innerHTML += `
@@ -178,7 +180,7 @@ function createFilteredArea() {
 };
 
 function populateRecipeArea() {
-  recipeRepo.data.recipeData.forEach((recipe) => {
+  recipeRepo.data.forEach((recipe) => {
     let newRecipeId = recipe.id + 1;
     let newRecipeId2 = recipe.id + 2;
     if(event.target.id === recipe.id.toString()) {
@@ -255,7 +257,7 @@ function displayRecipesToCookArea() {
 };
 
 function addRecipeToFavorites(event) {
-  recipeRepo.data.recipeData.forEach((recipe) => {
+  recipeRepo.data.forEach((recipe) => {
     if(event.target.id === recipe.id.toString() && !user.favoriteRecipes.includes(recipe)) {
       user.favoriteRecipe(recipe)
         favoriteRecipeArea.innerHTML = ""
@@ -272,7 +274,7 @@ function addRecipeToFavorites(event) {
 };
 
 function addRecipesToCook(event) {
-  recipeRepo.data.recipeData.forEach((recipe) => {
+  recipeRepo.data.forEach((recipe) => {
     let recipeId2 = recipe.id + 2;
     if(event.target.id === recipeId2.toString() && !user.recipesToCook.includes(recipe)) {
       user.decideToCook(recipe)
@@ -301,7 +303,7 @@ function updateFavoritesArea() {
 };
 
 function filterRecipes(event) {
-  recipeRepo.data.recipeData.forEach((recipe) => {
+  recipeRepo.data.forEach((recipe) => {
     let recipeTags = recipe.tags.forEach((recipeTag) => {
       if(filterDropdown.value === recipeTag) {
         createFilteredArea();

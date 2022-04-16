@@ -1,7 +1,7 @@
 // Your fetch requests will live here!
-let users = `https://what-s-cookin-starter-kit.herokuapp.com/api/v1/users`
-let ingredients = `https://what-s-cookin-starter-kit.herokuapp.com/api/v1/ingredients`
-let recipes = `https://what-s-cookin-starter-kit.herokuapp.com/api/v1/recipes`
+let users = `http://localhost:3001/api/v1/users`
+let ingredients = `http://localhost:3001/api/v1/ingredients`
+let recipes = `http://localhost:3001/api/v1/recipes`
 
 
 
