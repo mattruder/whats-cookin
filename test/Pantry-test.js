@@ -35,7 +35,7 @@ describe('Pantry', () => {
                 },
                 {
                   "ingredient": 8901,
-                  "amount": 1.5
+                  "amount": 0.5
                   }
 
                ]

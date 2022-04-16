@@ -54,8 +54,6 @@ class Pantry {
                         return thePantryIngredient.amount
                       }
                     })))
-                    console.log('thePantryIngredientAmount: ', pantryIngredientAmount)
-                    console.log("ingredientInRecipe: ", ingredientInRecipe.quantity.amount)
                     allRecipeIngredient.quantity.amount = ingredientInRecipe.quantity.amount - pantryIngredientAmount[0].amount
                     if(!this.ingredientsNeeded.includes(allRecipeIngredient)) {
                       this.ingredientsNeeded.push(allRecipeIngredient)
