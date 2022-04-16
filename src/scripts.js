@@ -92,12 +92,24 @@ const cookBtn = document.querySelector(".cook-recipe-btn")
 
 myPantryBtn.addEventListener("click", viewMyPantry)
 
-cookBtn.addEventListener("click", (event) => {
+recipesToCookArea.addEventListener("click", (event) => {
   cookRecipe(event)
 })
 
-const cookRecipe = (event) => {
-  console.log('hello')
+function cookRecipe(event) {
+  user.recipesToCook.forEach((recipe) => {
+    let recipeId = recipe.id + 3;
+    if(event.target.id === recipeId.toString() && userPantry.determineIngredients(recipe.id) === 'You do not have enough ingredients to cook this recipe.') {
+    console.log(userPantry.ingredientsNeeded)
+
+    }
+    if(event.target.id === recipeId.toString() && userPantry.determineIngredients(recipe.id) === 'You have enough ingredients') {
+        console.log("you have enough ingredients")
+
+    }
+
+  })
+
 }
 
 viewAllButton.addEventListener("click", viewAllRecipes);
@@ -183,12 +195,12 @@ function viewMyPantry() {
       user.pantry.forEach((ingredientInPantry) => {
           if (ingredient.id === ingredientInPantry.ingredient) {
             myPantryArea.innerHTML += `<li class="ingredient-in-pantry" id=${ingredient.id}>${ingredient.name} amount: ${ingredientInPantry.amount}</li>`
-          
+
           }
       })
     })
-  
-  
+
+
 };
 
 
@@ -301,6 +313,11 @@ function populateRecipeArea() {
     if(event.target.id === newRecipeId2.toString()) {
       addRecipesToCook();
   }
+
+//   if(event.target.id === newRecipeId3.toString()) {
+//     // console.log(event.target.id)
+//     cookRecipe();
+// }
 })
 };
 
@@ -366,8 +383,9 @@ function addRecipesToCook(event) {
         recipesToCookArea.innerHTML += `
         <div class="recipes-to-cook-styling">
         <h1 id=${recipeToCook.id}>${recipeToCook.name}</h1>
+        <button class="cook-recipe-btn" id=${recipeToCook.id + 3}>Cook</button>
         </div>
-        <button class="cook-recipe-btn" id=${recipeToCook.id +3}>Cook</button>
+
         `
       })
     }
@@ -435,4 +453,3 @@ function goHome() {
   recipesToCookArea.classList.add("hidden");
   homePageStyling.classList.remove("hidden");
 };
-

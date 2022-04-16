@@ -9,6 +9,7 @@ class Pantry {
 
 
     determineIngredients(recipeId) {
+      this.ingredientsNeeded = [];
         let returnStatement;
         let pantryIngredientArray = [];
         let allRecipeIngredients = []
@@ -72,7 +73,6 @@ class Pantry {
             }
          }
        })
-       console.log('ingredients needed: ', this.ingredientsNeeded)
        return returnStatement
     }
 }
