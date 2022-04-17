@@ -116,6 +116,7 @@ function cookRecipe(event) {
 
   user.recipesToCook.forEach((recipe) => {
     let recipeId = recipe.id + 3;
+    userPantry.ingredients = user.pantry
     if(event.target.id === recipeId.toString() && userPantry.determineIngredients(recipe.id) === 'You do not have enough ingredients to cook this recipe.') {
       console.log("you do not have enough ingredients")
 
@@ -216,7 +217,7 @@ function viewAllRecipes() {
 };
 
 function viewMyPantry() {
-  user.updatePantry()
+  userPantry.ingredients = user.pantry
   console.log("user.pantry: ", user.pantry)
   myPantryArea.classList.remove("hidden")
   recipesToCookArea.classList.add("hidden")
