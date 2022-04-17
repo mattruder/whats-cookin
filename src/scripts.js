@@ -51,8 +51,14 @@ getData().then(data => {
 
 let postVar = {
   "userID": 10,
-  "ingredientID": 1124,
-  "ingredientModification": -3
+  "ingredientID": 1125,
+  "ingredientModification": 20
+}
+
+let postVar1 = {
+  "userID": 10,
+  "ingredientID": 1077,
+  "ingredientModification": 20
 }
 
 
@@ -97,14 +103,47 @@ recipesToCookArea.addEventListener("click", (event) => {
 })
 
 function cookRecipe(event) {
+
+  // getData().then(data => {
+  //   allData.push(data)
+  //   userData = allData[0][0]
+  //   ingredientsData = allData[0][1]
+  //   recipes = allData[0][2]
+  //   user = new User(userData[9])
+  //   userPantry = new Pantry(user)
+  //   recipeRepo = new RecipeRepository(recipes)
+  // })
+
   user.recipesToCook.forEach((recipe) => {
     let recipeId = recipe.id + 3;
     if(event.target.id === recipeId.toString() && userPantry.determineIngredients(recipe.id) === 'You do not have enough ingredients to cook this recipe.') {
-    console.log(userPantry.ingredientsNeeded)
+      console.log("you do not have enough ingredients")
 
     }
     if(event.target.id === recipeId.toString() && userPantry.determineIngredients(recipe.id) === 'You have enough ingredients') {
         console.log("you have enough ingredients")
+        console.log("recipe: ", recipe)
+
+        recipe.ingredients.forEach((recipeIngredient) => {
+          let ingredientToRemove = {
+            "userID": user.id,
+            "ingredientID": recipeIngredient.id,
+            "ingredientModification": -recipeIngredient.quantity.amount
+          }
+          removeFromUserPantry(ingredientToRemove)
+        })
+
+        user.recipesToCook.forEach((recipeToCook, i) => {
+          if(recipeToCook.id === recipe.id) {
+            console.log("i ", i)
+            user.recipesToCook.splice(i, 1)
+            console.log("recipes to cook")
+          }
+        })
+
+
+
+        console.log("user pantry after: ", userPantry)
 
     }
 
@@ -177,6 +216,8 @@ function viewAllRecipes() {
 };
 
 function viewMyPantry() {
+  user.updatePantry()
+  console.log("user.pantry: ", user.pantry)
   myPantryArea.classList.remove("hidden")
   recipesToCookArea.classList.add("hidden")
   toCookButtonArea.classList.add("hidden")
@@ -340,6 +381,17 @@ function displayFavoriteRecipeArea() {
 };
 
 function displayRecipesToCookArea() {
+  console.log(user.recipesToCook)
+  recipesToCookArea.innerHTML = ""
+  user.recipesToCook.forEach((recipeToCook) => {
+    recipesToCookArea.innerHTML += `
+    <div class="recipes-to-cook-styling">
+    <h1 id=${recipeToCook.id}>${recipeToCook.name}</h1>
+    <button class="cook-recipe-btn" id=${recipeToCook.id + 3}>Cook</button>
+    </div>
+
+    `
+  })
   myPantryArea.classList.add("hidden")
   filterFavoritesArea.classList.add("hidden");
   foodImagesSection.innerHTML = "";
@@ -378,16 +430,16 @@ function addRecipesToCook(event) {
     let recipeId2 = recipe.id + 2;
     if(event.target.id === recipeId2.toString() && !user.recipesToCook.includes(recipe)) {
       user.decideToCook(recipe)
-      recipesToCookArea.innerHTML = ""
-      user.recipesToCook.forEach((recipeToCook) => {
-        recipesToCookArea.innerHTML += `
-        <div class="recipes-to-cook-styling">
-        <h1 id=${recipeToCook.id}>${recipeToCook.name}</h1>
-        <button class="cook-recipe-btn" id=${recipeToCook.id + 3}>Cook</button>
-        </div>
-
-        `
-      })
+      // recipesToCookArea.innerHTML = ""
+      // user.recipesToCook.forEach((recipeToCook) => {
+      //   recipesToCookArea.innerHTML += `
+      //   <div class="recipes-to-cook-styling">
+      //   <h1 id=${recipeToCook.id}>${recipeToCook.name}</h1>
+      //   <button class="cook-recipe-btn" id=${recipeToCook.id + 3}>Cook</button>
+      //   </div>
+      //
+      //   `
+      // })
     }
   })
 };
@@ -435,6 +487,10 @@ function filterFavoriteRecipes(event) {
 };
 
 function goHome() {
+  console.log("user pantry before: ", userPantry)
+  // addToUserPantry(postVar)
+  // addToUserPantry(postVar1)
+  console.log("user pantry after!: ", userPantry)
   myPantryArea.classList.add("hidden")
   filterFavoritesArea.classList.add("hidden");
   foodImagesSection.innerHTML = "";

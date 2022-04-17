@@ -4,17 +4,20 @@ class Pantry {
         this.ingredients = user.pantry
         this.enoughIngredients = true
         this.ingredientsNeeded = []
+        this.ingredientsForRecipe = []
     }
 
 
 
     determineIngredients(recipeId) {
       this.ingredientsNeeded = [];
+      this.ingredientsForRecipe = [];
         let returnStatement;
         let pantryIngredientArray = [];
         let allRecipeIngredients = []
         this.recipesToCook.forEach((recipe) => {
             if(recipe.id === recipeId) {
+              this.ingredientsForRecipe = recipe.ingredients
             let recipeIngredients = recipe.ingredients.map((recipeIngredient) => {
                 allRecipeIngredients.push(recipeIngredient)
                 return recipeIngredient.id
@@ -74,6 +77,25 @@ class Pantry {
          }
        })
        return returnStatement
+    }
+
+    removeIngredients() {
+      console.log("pantry ingredients in function: ", this.ingredients)
+      this.ingredients.forEach((pantryIngredient) => {
+        this.ingredientsForRecipe.forEach((recipeIngredient) => {
+          if(pantryIngredient.ingredient === recipeIngredient.id) {
+            pantryIngredient.amount -= recipeIngredient.quantity.amount * 2
+            console.log("pantry Ingredient amount: ", pantryIngredient, pantryIngredient.amount, pantryIngredient.ingredient)
+            console.log("recipe ingredient amount: ", recipeIngredient.quantity.amount, recipeIngredient.id)
+
+          }
+
+        })
+      })
+    }
+
+    updatePantry() {
+      return this.ingredients;
     }
 }
 
