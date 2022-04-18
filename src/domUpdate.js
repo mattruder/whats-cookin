@@ -32,6 +32,7 @@ const filterFavoritesBtn = document.querySelector(".filter-favorite-recipes-btn"
 const filterFavoritesArea = document.querySelector(".filter-favorites-dropdown");
 const allRecipeSearchbar = document.querySelector(".all-recipe-searchbar");
 const favoritesSearchbar = document.querySelector(".favorites-searchbar");
+const favoriteSearchbarValue = document.querySelector(".favorite-searchbar")
 const toCookButtonArea = document.querySelector(".to-cook-button-area");
 const viewToCookFromFavorites = document.querySelector(".recipes-to-cook-from-favorites-btn");
 const homePageStyling = document.querySelector(".home-page-styling");
@@ -44,67 +45,38 @@ const cookBtn = document.querySelector(".cook-recipe-btn")
 const homeButton = document.querySelector(".home-btn");
 const myPantryFromFavoritesButton = document.querySelector(".my-pantry-from-favorites")
 const searchError = document.querySelector(".search-error")
-// let allData = [];
-// let userData;
-// let user;
-// let recipeRepo;
-// let recipes;
-// let ingredientsData;
-// let userPantry;
-
-// getData().then(data => {
-//   allData.push(data)
-//   userData = allData[0][0]
-//   ingredientsData = allData[0][1]
-//   recipes = allData[0][2]
-//   user = new User(userData[9])
-//   userPantry = new Pantry(user)
-//   recipeRepo = new RecipeRepository(recipes)
-//   displayNewImages()
-// })
+const searchbarValue = document.querySelector(".searchbar")
+const errorMessage = document.querySelector(".error-message")
 
 let domUpdates = {
 
 
 
   goHome(recipes) {
-  myPantryArea.classList.add("hidden")
-  filterFavoritesArea.classList.add("hidden");
+  this.removeHidden([foodImagesSection, homePageStyling,
+  viewAllButton, allRecipeSearchbar])
+  this.addHidden([allRecipesSection, favoriteRecipeArea, myPantryArea,
+  filterFavoritesArea, displayRecipeSection, filteredByTagArea,
+  favoritesSearchbar, toCookButtonArea, recipesToCookArea])
   foodImagesSection.innerHTML = "";
-  this.displayNewImages(recipes);
-  foodImagesSection.classList.remove("hidden");
-  allRecipesSection.classList.add("hidden");
-  favoriteRecipeArea.classList.add("hidden");
-  viewAllButton.classList.remove("hidden");
-  displayRecipeSection.classList.add("hidden");
   displayRecipeSection.innerHTML = "";
   filteredByTagArea.innerHTML= "";
-  filteredByTagArea.classList.add("hidden");
-  allRecipeSearchbar.classList.remove("hidden");
-  favoritesSearchbar.classList.add("hidden");
-  toCookButtonArea.classList.add("hidden");
-  recipesToCookArea.classList.add("hidden");
-  homePageStyling.classList.remove("hidden");
+  this.displayNewImages(recipes);
 },
 
 viewMyPantry(user, ingredientsData) {
-  myPantryArea.classList.remove("hidden")
-  recipesToCookArea.classList.add("hidden")
-  toCookButtonArea.classList.add("hidden")
   allRecipeList.innerHTML = ""
-  filterFavoritesArea.classList.add("hidden")
-  foodImagesSection.classList.add("hidden");
-  allRecipesSection.classList.add("hidden");
-  viewAllButton.classList.add("hidden");
-  displayRecipeSection.classList.add("hidden")
-  filteredByTagArea.classList.add("hidden")
-  allRecipeSearchbar.classList.remove("hidden");
-  favoritesSearchbar.classList.add("hidden");
-  favoriteRecipeArea.classList.add("hidden");
+  this.addHidden([favoritesSearchbar, favoriteRecipeArea,
+  recipesToCookArea, toCookButtonArea, filterFavoritesArea,
+foodImagesSection, allRecipesSection, viewAllButton, displayRecipeSection,
+filteredByTagArea])
+  this.removeHidden([allRecipeSearchbar, myPantryArea])
+
     ingredientsData.forEach((ingredient) => {
       user.pantry.forEach((ingredientInPantry) => {
           if (ingredient.id === ingredientInPantry.ingredient) {
-            myPantryArea.innerHTML += `<li class="ingredient-in-pantry" id=${ingredient.id}>${ingredient.name} amount: ${ingredientInPantry.amount}</li>`
+            myPantryArea.innerHTML += `
+            <li class="ingredient-in-pantry" id=${ingredient.id}>${ingredient.name} amount: ${ingredientInPantry.amount}</li>`
 
           }
       })
@@ -129,42 +101,23 @@ getRandomIndex(array) {
 },
 
 viewAllRecipes(recipeRepo) {
-  recipesToCookArea.classList.add("hidden")
-  toCookButtonArea.classList.add("hidden")
-  allRecipeList.innerHTML = ""
-  filterFavoritesArea.classList.add("hidden")
-  foodImagesSection.classList.add("hidden");
-  allRecipesSection.classList.remove("hidden");
-  viewAllButton.classList.add("hidden");
-  displayRecipeSection.classList.add("hidden")
-  filteredByTagArea.classList.add("hidden")
-  myPantryArea.classList.add("hidden")
-  allRecipeSearchbar.classList.remove("hidden");
-  favoritesSearchbar.classList.add("hidden");
-  favoriteRecipeArea.classList.add("hidden");
+  allRecipeList.innerHTML = ''
   recipeRepo.data.forEach((recipe) => {
-    allRecipeList.innerHTML += `<li class="recipe-in-list" id=${recipe.id}>${recipe.name}</li>`
+    allRecipeList.innerHTML += `
+    <li class="recipe-in-list" id=${recipe.id}>${recipe.name}</li>`
   })
-},
+  this.addHidden([recipesToCookArea,
+  toCookButtonArea, filterFavoritesArea, foodImagesSection, viewAllButton,
+displayRecipeSection, filteredByTagArea, myPantryArea, favoritesSearchbar,
+favoriteRecipeArea])
 
-// searchRecipe(recipeRepo) {
-//     filteredByTagArea.innerHTML = ""
-//     let searchInput = document.querySelector(".searchbar").value
-//     searchInput = searchInput.toLowerCase();
-//     recipeRepo.data.forEach((recipe) => {
-//         if (recipe.name.toLowerCase().includes(searchInput)) {
-//             this.createFilteredArea();
-//         filteredByTagArea.innerHTML += `
-//         <h1 id=${recipe.id}>${recipe.name}</h1>
-//         `
-//         }
-//     })
-//     document.querySelector(".searchbar").value = ''
-// },
+this.removeHidden([allRecipesSection, allRecipeSearchbar])
+
+},
 
 searchRecipe(recipeRepo) {
     filteredByTagArea.innerHTML = ""
-    let searchInput = document.querySelector(".searchbar").value
+    let searchInput = searchbarValue.value
     searchInput = searchInput.toLowerCase();
 
     recipeRepo.data.map((recipe) => {
@@ -176,7 +129,7 @@ searchRecipe(recipeRepo) {
         <h1 id=${recipe.id}>${recipe.name}</h1>
         `
         searchError.classList.add("hidden");
-           document.querySelector(".searchbar").value = ''
+           searchbarValue.value = ''
 
         }
         // Now users can only input letters + charcode on line 14 in html
@@ -191,22 +144,12 @@ searchRecipe(recipeRepo) {
 
 },
 
-createFilteredArea() {
-  myPantryArea.classList.add("hidden")
-  filterFavoritesArea.classList.add("hidden");
-  foodImagesSection.classList.add("hidden");
-  allRecipesSection.classList.add("hidden");
-  favoriteRecipeArea.classList.add("hidden");
-  displayRecipeSection.classList.add("hidden");
-  displayRecipeSection.innerHTML = "";
-  filteredByTagArea.classList.remove("hidden");
-  toCookButtonArea.classList.add("hidden");
-  viewAllButton.classList.remove("hidden");
-},
+
 
 searchFavoriteRecipe(user) {
     filteredByTagArea.innerHTML = ''
-    let searchInput = document.querySelector(".favorite-searchbar").value
+    let searchInput = favoriteSearchbarValue.value
+
     searchInput = searchInput.toLowerCase();
     user.favoriteRecipes.forEach((recipe) => {
         if (searchInput.length > 0 && recipe.name.toLowerCase().includes(searchInput)) {
@@ -215,16 +158,23 @@ searchFavoriteRecipe(user) {
         <h1 id=${recipe.id}>${recipe.name}</h1>
         `
         searchError.classList.add("hidden");
-         document.querySelector(".searchbar").value = ''
+         favoriteSearchbarValue.value = ''
         }
 
         else if (searchInput.length === 0 || !recipe.name.toLowerCase().includes(searchInput)) {
           console.log('error here')
-          // searchError.classList.remove("hidden");
+          searchError.classList.remove("hidden");
 
         }
     })
-    document.querySelector(".favorite-searchbar").value = ""
+    favoriteSearchbarValue.value = ""
+},
+
+createFilteredArea() {
+  this.addHidden([myPantryArea, filterFavoritesArea, foodImagesSection,
+  allRecipesSection, favoriteRecipeArea, displayRecipeSection, toCookButtonArea])
+  this.removeHidden([filteredByTagArea, viewAllButton])
+  displayRecipeSection.innerHTML = "";
 },
 
 
@@ -235,21 +185,13 @@ displayRecipe(event, recipeRepo, ingredientsData, user) {
 },
 
 createRecipeArea() {
-  myPantryArea.classList.add("hidden")
-  filterFavoritesArea.classList.add("hidden");
-  foodImagesSection.classList.add("hidden");
-  allRecipesSection.classList.add("hidden");
-  favoriteRecipeArea.classList.add("hidden");
-  homePageStyling.classList.add("hidden");
-  viewAllButton.classList.remove("hidden");
-  displayRecipeSection.classList.remove("hidden");
   displayRecipeSection.innerHTML = "";
   toCookButtonArea.innerHTML = "";
-  filteredByTagArea.classList.add("hidden");
-  allRecipeSearchbar.classList.remove("hidden");
-  favoritesSearchbar.classList.add("hidden");
-  toCookButtonArea.classList.remove("hidden");
-  recipesToCookArea.classList.add("hidden");
+  this.addHidden([myPantryArea, filterFavoritesArea, foodImagesSection, allRecipesSection,
+  favoriteRecipeArea, homePageStyling, recipesToCookArea, favoritesSearchbar,
+  filteredByTagArea])
+  this.removeHidden([allRecipeSearchbar, toCookButtonArea, viewAllButton, displayRecipeSection])
+
 },
 
 populateRecipeArea(recipeRepo, ingredientsData, user) {
@@ -272,7 +214,7 @@ populateRecipeArea(recipeRepo, ingredientsData, user) {
       <img class="recipe-main-image" src="${recipeToDisplay.image}" alt="image of recipe food">
       <h1>${recipeToDisplay.name}</h1>
       <div class="favorite-btn-area">
-      <button class="favorite-btn" id=${recipeToDisplay.id}>Favorite Recipe</button>
+       <button class="favorite-btn" id=${recipeToDisplay.id}>Favorite Recipe</button>
       </div>
       <h2>Cost: $${recipeCost}</h2>
       <h3>Ingredients: </h3>
@@ -302,43 +244,30 @@ displayRecipesToCookArea(user) {
   user.recipesToCook.forEach((recipeToCook) => {
     recipesToCookArea.innerHTML += `
     <div class="recipes-to-cook-styling">
-    <h1 id=${recipeToCook.id}>${recipeToCook.name}</h1>
-    <button class="cook-recipe-btn" id=${recipeToCook.id + 3}>Cook</button>
+      <h1 id=${recipeToCook.id}>${recipeToCook.name}</h1>
+      <button class="cook-recipe-btn" id=${recipeToCook.id + 3}>Cook</button>
     </div>
 
     `
   })
-  myPantryArea.classList.add("hidden")
-  filterFavoritesArea.classList.add("hidden");
-  foodImagesSection.innerHTML = "";
-  foodImagesSection.classList.add("hidden");
-  allRecipesSection.classList.add("hidden");
-  viewAllButton.classList.remove("hidden");
-  displayRecipeSection.classList.add("hidden");
+  this.addHidden([myPantryArea, filterFavoritesArea, favoritesSearchbar, toCookButtonArea,
+  filteredByTagArea, foodImagesSection, allRecipesSection, displayRecipeSection,
+  favoriteRecipeArea])
+
+  this.removeHidden([viewAllButton, recipesToCookArea, allRecipeSearchbar])
+
   displayRecipeSection.innerHTML = "";
-  favoriteRecipeArea.classList.add("hidden");
-  recipesToCookArea.classList.remove("hidden");
-  allRecipeSearchbar.classList.remove("hidden");
-  favoritesSearchbar.classList.add("hidden");
-  toCookButtonArea.classList.add("hidden");
-  filteredByTagArea.classList.add("hidden");
+  foodImagesSection.innerHTML = "";
 },
 
 displayFavoriteRecipeArea() {
-  myPantryArea.classList.add("hidden")
-  filterFavoritesArea.classList.remove("hidden");
-  foodImagesSection.innerHTML = "";
-  foodImagesSection.classList.add("hidden");
-  allRecipesSection.classList.add("hidden");
-  viewAllButton.classList.remove("hidden");
-  displayRecipeSection.classList.add("hidden");
-  displayRecipeSection.innerHTML = "";
-  filteredByTagArea.innerHTML= "";
-  favoriteRecipeArea.classList.remove("hidden");
-  allRecipeSearchbar.classList.add("hidden");
-  favoritesSearchbar.classList.remove("hidden");
-  toCookButtonArea.classList.add("hidden");
-  recipesToCookArea.classList.add("hidden");
+  this.addHidden([myPantryArea, foodImagesSection, allRecipesSection, displayRecipeSection,
+  allRecipeSearchbar, toCookButtonArea, recipesToCookArea])
+  this.removeHidden([viewAllButton, favoritesSearchbar, favoriteRecipeArea, filterFavoritesArea])
+
+    displayRecipeSection.innerHTML = "";
+    filteredByTagArea.innerHTML= "";
+    foodImagesSection.innerHTML = "";
 },
 
 addRecipeToFavorites(event, recipeRepo, user) {
@@ -349,8 +278,8 @@ addRecipeToFavorites(event, recipeRepo, user) {
       user.favoriteRecipes.forEach((favoriteRecipe) => {
         favoriteRecipeArea.innerHTML += `
         <div class="favorite-recipe-styling">
-        <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
-        <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
+          <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
+          <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
         </div>
           `
       })
@@ -364,8 +293,8 @@ updateFavoritesArea(user) {
   user.favoriteRecipes.forEach((favoriteRecipe) => {
   favoriteRecipeArea.innerHTML += `
   <div class="favorite-recipe-styling">
-  <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
-  <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
+    <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
+    <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
   </div>
     `
 })
@@ -387,7 +316,7 @@ filterRecipes(event, recipeRepo) {
         this.createFilteredArea();
         filteredByTagArea.innerHTML += `
         <div class="filtered-recipe-styling">
-        <h1 id=${recipe.id}>${recipe.name}</h1>
+          <h1 id=${recipe.id}>${recipe.name}</h1>
         </div>
         `      }
     })
@@ -399,10 +328,10 @@ filterFavoriteRecipes(event, user) {
   user.favoriteRecipes.forEach((recipe) => {
     let recipeTags = recipe.tags.forEach((recipeTag) => {
       if(filterDropdown1.value === recipeTag) {
-        createFilteredArea();
+        this.createFilteredArea();
         filteredByTagArea.innerHTML += `
         <section class="filtered-recipe-styling">
-        <h1 id=${recipe.id}>${recipe.name}</h1>
+          <h1 id=${recipe.id}>${recipe.name}</h1>
         </section>
         `      }
     })
@@ -460,8 +389,10 @@ removeFromUserPantry(ingredientToRemove) {
       'Content-Type' : 'application/json'
   }
 })
-.then(response => response.json())
-.catch(err => console.log('ERROR'))
+.then(response => {
+  this.checkError(response)
+})
+.catch(err => setTimeout(errorMessage.classList.remove('hidden'), 1000))
 },
 
 addToUserPantry(ingredientToAdd) {
@@ -473,7 +404,29 @@ addToUserPantry(ingredientToAdd) {
       }
   })
   .then(response => response.json())
+  .then(this.checkError())
   .catch(err => console.log('ERROR'))
+},
+
+removeHidden(array) {
+  array.forEach((element) => {
+    element.classList.remove("hidden")
+  })
+},
+
+addHidden(array) {
+  array.forEach((element) => {
+    element.classList.add("hidden")
+  })
+},
+
+checkError(response) {
+  if(response.status >= 200 && response.status <= 299) {
+    return response.json()
+  } else {
+    throw Error(response.statusText)
+    console.log(response.statusText)
+  }
 }
 
 

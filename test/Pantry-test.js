@@ -35,7 +35,7 @@ describe('Pantry', () => {
                 },
                 {
                   "ingredient": 8901,
-                  "amount": 0.5
+                  "amount": 1
                   }
 
                ]
@@ -106,12 +106,8 @@ describe('Pantry', () => {
 
     it(`Should determine whether a user's pantry has enough ingredients`, () => {
         user.decideToCook(recipe)
-      console.log('user: ', user)
-
-// console.log('2nd user log: ', user)
-
         expect(pantry.enoughIngredients).to.equal(true)
-        expect(pantry.determineIngredients(678353)).to.equal('You have enough ingredients')
+        expect(pantry.determineIngredients(recipe)).to.equal(true)
     })
 
 
