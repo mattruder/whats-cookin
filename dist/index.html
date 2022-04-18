@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8">
     <title>Whats Cookin</title>
@@ -11,22 +11,30 @@
       </div>
       <div class = "right-header">
         <div class = "all-recipe-searchbar">
-          <input class="searchbar" type="text" placeholder="search all recipes">
+
+          <input class="searchbar" id="searchbar" type="text" placeholder="search all recipes" onkeypress="return (event.charCode > 64 &&
+          event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)">
+          <label for="searchbar" class="hidden">Search Bar</label>
           <button class="search-btn">Search</button>
           <button class="favorites-btn">Favorites</button>
           <button class="recipes-to-cook-btn">Recipes To Cook</button>
+          <button class="my-pantry">My Pantry</button>
         </div>
         <div class = "favorites-searchbar hidden">
-          <input class="favorite-searchbar" type="text" placeholder="search favorites">
+          <input class="favorite-searchbar" id="favorite-searchbar" type="text" placeholder="search favorites" onkeypress="return (event.charCode > 64 &&
+          event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)">
+          <label for="favorite-searchbar" class="hidden">Favorites Search Bar</label>
           <button class="favorite-search-btn">Search</button>
           <button class="recipes-to-cook-from-favorites-btn">Recipes To Cook</button>
+          <button class="my-pantry-from-favorites">My Pantry</button>
         </div>
       </div>
     </header>
+
     <section class="food-images-section">
     </section>
     <section class="all-recipes hidden">
-      <label for="recipe-tags">Filter By Tag:</label>
+      <label for="tags">Filter By Tag:</label>
       <select name="recipe-tags" id="tags">
         <option value="antipasti">antipasti</option>
         <option value="starter">starter</option>
@@ -60,7 +68,7 @@
     <section class="filtered-by-tag-area hidden">
     </section>
     <section class="filter-favorites-dropdown hidden">
-      <label for="recipe-tags1">Filter By Tag:</label>
+      <label for="tags1">Filter By Tag:</label>
       <select name="recipe-tags1" id="tags1">
         <option value="antipasti">antipasti</option>
         <option value="starter">starter</option>
@@ -88,11 +96,18 @@
       <button class="unfavorite-btn hidden">Unfavorite</button>
     </section>
     <section class="recipes-to-cook-area hidden">
+      <button class="cook-recipe-btn hidden">Cook</button>
+      <p class="error-message hidden">Not Enough Ingredients</p>
+    </section>
+    <section class="my-pantry-area hidden">
     </section>
     <section class="home-page-styling">
     </section>
     <section class="below-food-images">
       <button class="view-all-btn">View All Recipes</button>
+    </section>
+    <section class="search-error hidden">
+      <p>Error</p>
     </section>
   </body>
   <script src="bundle.js"></script>

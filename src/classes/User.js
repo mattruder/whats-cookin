@@ -45,6 +45,10 @@ class User {
         })
     }
 
+    updatePantry() {
+      return this.pantry;
+    }
+
 }
 
 

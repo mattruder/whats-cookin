@@ -9,7 +9,7 @@ describe('Recipe', () => {
 
   beforeEach(() => {
 
-    ingredientsData = {ingredientsData: [
+    ingredientsData = [
       {
         "id": 1009016,
         "name": "apple cider",
@@ -70,7 +70,7 @@ describe('Recipe', () => {
         "name": "sriracha sauce",
         "estimatedCostInCents": 576
       }
-    ]};
+    ];
     porkchopRecipe = {
       "id": 678353,
       "image": "https://spoonacular.com/recipeImages/678353-556x370.jpg",

@@ -246,6 +246,7 @@ describe('Recipe Repository', () => {
 
   it('should filter recipe by tag', () => {
     recipeRepository.getRecipeByTag(`hor d'oeuvre`)
+    console.log(recipeRepository.recipes)
     expect(recipeRepository.recipes.length).to.equal(2)
   });
 
