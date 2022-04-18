@@ -5,6 +5,7 @@ import Recipe from './classes/Recipe.js';
 import User from './classes/User.js';
 import RecipeRepository from './classes/RecipeRepository.js';
 import Pantry from './classes/Pantry.js';
+import domUpdates from './domUpdate.js'
 
 let allData = [];
 let userData;
@@ -13,6 +14,8 @@ let recipeRepo;
 let recipes;
 let ingredientsData;
 let userPantry;
+
+
 
 const addToUserPantry = (ingredientToAdd) => {
   fetch(`http://localhost:3001/api/v1/users`, {
@@ -38,7 +41,13 @@ const removeFromUserPantry = (ingredientToRemove) => {
 .catch(err => console.log('ERROR'))
 }
 
-getData().then(data => {
+// window.addEventListener("load", fetching)
+
+
+//
+// function fetching() {
+//   console.log('yes')
+  getData().then(data => {
   allData.push(data)
   userData = allData[0][0]
   ingredientsData = allData[0][1]
@@ -46,20 +55,23 @@ getData().then(data => {
   user = new User(userData[9])
   userPantry = new Pantry(user)
   recipeRepo = new RecipeRepository(recipes)
-  displayNewImages()
+  domUpdates.displayNewImages(recipes)
 })
+// }
 
-let postVar = {
-  "userID": 10,
-  "ingredientID": 1125,
-  "ingredientModification": 20
-}
 
-let postVar1 = {
-  "userID": 10,
-  "ingredientID": 1077,
-  "ingredientModification": 20
-}
+
+// let postVar = {
+//   "userID": 10,
+//   "ingredientID": 1125,
+//   "ingredientModification": 20
+// }
+//
+// let postVar1 = {
+//   "userID": 10,
+//   "ingredientID": 1077,
+//   "ingredientModification": 20
+// }
 
 
 
@@ -67,7 +79,7 @@ const viewAllButton = document.querySelector(".view-all-btn");
 const foodImagesSection = document.querySelector(".food-images-section");
 const allRecipesSection = document.querySelector(".all-recipes");
 const allRecipeList = document.querySelector(".all-recipe-list");
-const homeButton = document.querySelector(".home-btn");
+// const homeButton = document.querySelector(".home-btn");
 const favoriteRecipeArea = document.querySelector(".favorite-recipe-area");
 const favoritesAreaButton = document.querySelector(".favorites-btn");
 const favoriteRecipeButton = document.querySelector(".favorite-btn");
@@ -95,66 +107,27 @@ const favoriteSearchBtn = document.querySelector(".favorite-search-btn");
 const myPantryBtn = document.querySelector(".my-pantry")
 const myPantryArea = document.querySelector(".my-pantry-area")
 const cookBtn = document.querySelector(".cook-recipe-btn")
+const homeButton = document.querySelector(".home-btn");
 
-myPantryBtn.addEventListener("click", viewMyPantry)
-
+homeButton.addEventListener("click", () => {
+  domUpdates.goHome();
+})
+myPantryBtn.addEventListener("click", () => {
+  domUpdates.viewMyPantry(user, ingredientsData)
+})
 recipesToCookArea.addEventListener("click", (event) => {
   cookRecipe(event)
 })
 
-function cookRecipe(event) {
-
-  // getData().then(data => {
-  //   allData.push(data)
-  //   userData = allData[0][0]
-  //   ingredientsData = allData[0][1]
-  //   recipes = allData[0][2]
-  //   user = new User(userData[9])
-  //   userPantry = new Pantry(user)
-  //   recipeRepo = new RecipeRepository(recipes)
-  // })
-
-  user.recipesToCook.forEach((recipe) => {
-    let recipeId = recipe.id + 3;
-    userPantry.ingredients = user.pantry
-    if(event.target.id === recipeId.toString() && userPantry.determineIngredients(recipe.id) === 'You do not have enough ingredients to cook this recipe.') {
-      console.log("you do not have enough ingredients")
-
-    }
-    if(event.target.id === recipeId.toString() && userPantry.determineIngredients(recipe.id) === 'You have enough ingredients') {
-        console.log("you have enough ingredients")
-        console.log("recipe: ", recipe)
-
-        recipe.ingredients.forEach((recipeIngredient) => {
-          let ingredientToRemove = {
-            "userID": user.id,
-            "ingredientID": recipeIngredient.id,
-            "ingredientModification": -recipeIngredient.quantity.amount
-          }
-          removeFromUserPantry(ingredientToRemove)
-        })
-
-        user.recipesToCook.forEach((recipeToCook, i) => {
-          if(recipeToCook.id === recipe.id) {
-            console.log("i ", i)
-            user.recipesToCook.splice(i, 1)
-            console.log("recipes to cook")
-          }
-        })
+viewAllButton.addEventListener("click", () => {
+  domUpdates.viewAllRecipes(recipeRepo)
+})
 
 
 
-        console.log("user pantry after: ", userPantry)
-
-    }
-
-  })
-
-}
-
-viewAllButton.addEventListener("click", viewAllRecipes);
-homeButton.addEventListener("click", goHome);
-searchBtn.addEventListener("click", searchRecipe);
+searchBtn.addEventListener("click", () => {
+  domUpdates.searchRecipe(recipeRepo)
+})
 favoriteSearchBtn.addEventListener("click", searchFavoriteRecipe);
 allRecipeList.addEventListener("click", (event) => {
   displayRecipe(event);
@@ -182,85 +155,24 @@ filterFavoritesBtn.addEventListener("click", (event) => {
   filterFavoriteRecipes(event)
 });
 
-function getRandomIndex(array) {
-  return Math.floor(Math.random() * array.length);
-};
+// function getRandomIndex(array) {
+//   return Math.floor(Math.random() * array.length);
+// };
 
-function displayNewImages() {
-  const images = recipes.map((recipe) => {
-    return recipe.image;
-  });
-
-  foodImagesSection.innerHTML += `
-  <img src=${images[getRandomIndex(images)]}>
-  <img src=${images[getRandomIndex(images)]}>
-  <img src=${images[getRandomIndex(images)]}>`
-};
-
-function viewAllRecipes() {
-  recipesToCookArea.classList.add("hidden")
-  toCookButtonArea.classList.add("hidden")
-  allRecipeList.innerHTML = ""
-  filterFavoritesArea.classList.add("hidden")
-  foodImagesSection.classList.add("hidden");
-  allRecipesSection.classList.remove("hidden");
-  viewAllButton.classList.add("hidden");
-  displayRecipeSection.classList.add("hidden")
-  filteredByTagArea.classList.add("hidden")
-  myPantryArea.classList.add("hidden")
-  allRecipeSearchbar.classList.remove("hidden");
-  favoritesSearchbar.classList.add("hidden");
-  favoriteRecipeArea.classList.add("hidden");
-  recipeRepo.data.forEach((recipe) => {
-    allRecipeList.innerHTML += `<li class="recipe-in-list" id=${recipe.id}>${recipe.name}</li>`
-  })
-};
-
-function viewMyPantry() {
-  userPantry.ingredients = user.pantry
-  console.log("user.pantry: ", user.pantry)
-  myPantryArea.classList.remove("hidden")
-  recipesToCookArea.classList.add("hidden")
-  toCookButtonArea.classList.add("hidden")
-  allRecipeList.innerHTML = ""
-  filterFavoritesArea.classList.add("hidden")
-  foodImagesSection.classList.add("hidden");
-  allRecipesSection.classList.add("hidden");
-  viewAllButton.classList.add("hidden");
-  displayRecipeSection.classList.add("hidden")
-  filteredByTagArea.classList.add("hidden")
-  allRecipeSearchbar.classList.remove("hidden");
-  favoritesSearchbar.classList.add("hidden");
-  favoriteRecipeArea.classList.add("hidden");
-
-    ingredientsData.forEach((ingredient) => {
-      user.pantry.forEach((ingredientInPantry) => {
-          if (ingredient.id === ingredientInPantry.ingredient) {
-            myPantryArea.innerHTML += `<li class="ingredient-in-pantry" id=${ingredient.id}>${ingredient.name} amount: ${ingredientInPantry.amount}</li>`
-
-          }
-      })
-    })
-
-
-};
+// function displayNewImages() {
+//   const images = recipes.map((recipe) => {
+//     return recipe.image;
+//   });
 
 
 
-function searchRecipe() {
-    filteredByTagArea.innerHTML = ""
-    let searchInput = document.querySelector(".searchbar").value
-    searchInput = searchInput.toLowerCase();
-    recipeRepo.data.forEach((recipe) => {
-        if (recipe.name.toLowerCase().includes(searchInput)) {
-            createFilteredArea();
-        filteredByTagArea.innerHTML += `
-        <h1 id=${recipe.id}>${recipe.name}</h1>
-        `
-        }
-    })
-    document.querySelector(".searchbar").value = ''
-};
+
+
+
+
+
+
+
 
 function searchFavoriteRecipe() {
     filteredByTagArea.innerHTML = ''
@@ -312,6 +224,8 @@ function createFilteredArea() {
   toCookButtonArea.classList.add("hidden");
   viewAllButton.classList.remove("hidden");
 };
+
+
 
 function populateRecipeArea() {
   recipeRepo.data.forEach((recipe) => {
@@ -485,28 +399,46 @@ function filterFavoriteRecipes(event) {
     })
     return recipeTags
   })
-};
+}
 
-function goHome() {
-  console.log("user pantry before: ", userPantry)
-  // addToUserPantry(postVar)
-  // addToUserPantry(postVar1)
-  console.log("user pantry after!: ", userPantry)
-  myPantryArea.classList.add("hidden")
-  filterFavoritesArea.classList.add("hidden");
-  foodImagesSection.innerHTML = "";
-  displayNewImages();
-  foodImagesSection.classList.remove("hidden");
-  allRecipesSection.classList.add("hidden");
-  favoriteRecipeArea.classList.add("hidden");
-  viewAllButton.classList.remove("hidden");
-  displayRecipeSection.classList.add("hidden");
-  displayRecipeSection.innerHTML = "";
-  filteredByTagArea.innerHTML= "";
-  filteredByTagArea.classList.add("hidden");
-  allRecipeSearchbar.classList.remove("hidden");
-  favoritesSearchbar.classList.add("hidden");
-  toCookButtonArea.classList.add("hidden");
-  recipesToCookArea.classList.add("hidden");
-  homePageStyling.classList.remove("hidden");
-};
+function cookRecipe(event) {
+
+  user.recipesToCook.forEach((recipe) => {
+    let recipeId = recipe.id + 3;
+    userPantry.ingredients = user.pantry
+    if(event.target.id === recipeId.toString() && userPantry.determineIngredients(recipe.id) === 'You do not have enough ingredients to cook this recipe.') {
+      console.log("you do not have enough ingredients")
+
+    }
+    if(event.target.id === recipeId.toString() && userPantry.determineIngredients(recipe.id) === 'You have enough ingredients') {
+        console.log("you have enough ingredients")
+        console.log("recipe: ", recipe)
+
+        recipe.ingredients.forEach((recipeIngredient) => {
+          let ingredientToRemove = {
+            "userID": user.id,
+            "ingredientID": recipeIngredient.id,
+            "ingredientModification": -recipeIngredient.quantity.amount
+          }
+          removeFromUserPantry(ingredientToRemove)
+        })
+
+        user.recipesToCook.forEach((recipeToCook, i) => {
+          if(recipeToCook.id === recipe.id) {
+            console.log("i ", i)
+            user.recipesToCook.splice(i, 1)
+            console.log("recipes to cook")
+          }
+        })
+
+
+
+        console.log("user pantry after: ", userPantry)
+
+    }
+
+  })
+
+}
+
+export { ingredientsData, recipes, user, userPantry, recipeRepo }
