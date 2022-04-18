@@ -15,39 +15,7 @@ let recipes;
 let ingredientsData;
 let userPantry;
 
-
-
-const addToUserPantry = (ingredientToAdd) => {
-  fetch(`http://localhost:3001/api/v1/users`, {
-      method: 'POST',
-      body: JSON.stringify(ingredientToAdd),
-      headers: {
-          'Content-Type' : 'application/json'
-      }
-  })
-  .then(response => response.json())
-  .catch(err => console.log('ERROR'))
-}
-
-const removeFromUserPantry = (ingredientToRemove) => {
-  fetch(`http://localhost:3001/api/v1/users`, {
-  method: 'POST',
-  body: JSON.stringify(ingredientToRemove),
-  headers: {
-      'Content-Type' : 'application/json'
-  }
-})
-.then(response => response.json())
-.catch(err => console.log('ERROR'))
-}
-
-// window.addEventListener("load", fetching)
-
-
-//
-// function fetching() {
-//   console.log('yes')
-  getData().then(data => {
+getData().then(data => {
   allData.push(data)
   userData = allData[0][0]
   ingredientsData = allData[0][1]
@@ -57,23 +25,6 @@ const removeFromUserPantry = (ingredientToRemove) => {
   recipeRepo = new RecipeRepository(recipes)
   domUpdates.displayNewImages(recipes)
 })
-// }
-
-
-
-// let postVar = {
-//   "userID": 10,
-//   "ingredientID": 1125,
-//   "ingredientModification": 20
-// }
-//
-// let postVar1 = {
-//   "userID": 10,
-//   "ingredientID": 1077,
-//   "ingredientModification": 20
-// }
-
-
 
 const viewAllButton = document.querySelector(".view-all-btn");
 const foodImagesSection = document.querySelector(".food-images-section");
@@ -108,337 +59,77 @@ const myPantryBtn = document.querySelector(".my-pantry")
 const myPantryArea = document.querySelector(".my-pantry-area")
 const cookBtn = document.querySelector(".cook-recipe-btn")
 const homeButton = document.querySelector(".home-btn");
+const myPantryFromFavoritesButton = document.querySelector(".my-pantry-from-favorites")
+const searchError = document.querySelector(".search-error")
 
 homeButton.addEventListener("click", () => {
-  domUpdates.goHome();
+  domUpdates.goHome(recipes);
 })
+
 myPantryBtn.addEventListener("click", () => {
   domUpdates.viewMyPantry(user, ingredientsData)
 })
+
 recipesToCookArea.addEventListener("click", (event) => {
-  cookRecipe(event)
+  domUpdates.cookRecipe(event, user, userPantry)
 })
 
 viewAllButton.addEventListener("click", () => {
   domUpdates.viewAllRecipes(recipeRepo)
 })
 
-
-
 searchBtn.addEventListener("click", () => {
   domUpdates.searchRecipe(recipeRepo)
 })
-favoriteSearchBtn.addEventListener("click", searchFavoriteRecipe);
+
+favoriteSearchBtn.addEventListener("click", () => {
+  domUpdates.searchFavoriteRecipe(user)
+})
 allRecipeList.addEventListener("click", (event) => {
-  displayRecipe(event);
+  domUpdates.displayRecipe(event, recipeRepo, ingredientsData, user);
 });
 displayRecipeSection.addEventListener("click", (event) => {
-  addRecipeToFavorites(event);
+  domUpdates.addRecipeToFavorites(event, recipeRepo, user);
 });
-viewToCookFromFavorites.addEventListener("click", displayRecipesToCookArea);
-toCookButtonArea.addEventListener("click", addRecipesToCook);
-favoritesAreaButton.addEventListener("click", displayFavoriteRecipeArea);
-recipesToCookButton.addEventListener("click", displayRecipesToCookArea);
+
+viewToCookFromFavorites.addEventListener("click", () => {
+  domUpdates.displayRecipesToCookArea(user)
+})
+
+myPantryFromFavoritesButton.addEventListener("click", () => {
+  domUpdates.viewMyPantry(user, ingredientsData)
+})
+
+toCookButtonArea.addEventListener("click", (event) => {
+  domUpdates.addRecipesToCook(event, user, recipeRepo)
+})
+favoritesAreaButton.addEventListener("click", () => {
+  domUpdates.displayFavoriteRecipeArea()
+})
+
+recipesToCookButton.addEventListener("click", () => {
+  domUpdates.displayRecipesToCookArea(user)
+})
+
 favoriteRecipeArea.addEventListener("click", (event) => {
-  displayRecipe(event);
+  domUpdates.displayRecipe(event, recipeRepo, ingredientsData, user);
 });
+
 recipesToCookArea.addEventListener("click", (event) => {
-  displayRecipe(event);
+  domUpdates.displayRecipe(event, recipeRepo, ingredientsData, user);
 });
+
 filterButton.addEventListener("click", (event) => {
-  filterRecipes(event);
+  domUpdates.filterRecipes(event, recipeRepo);
 });
+
 filteredByTagArea.addEventListener("click", (event) => {
-  displayRecipe(event);
+  domUpdates.displayRecipe(event, recipeRepo, ingredientsData, user);
 });
+
 filterFavoritesBtn.addEventListener("click", (event) => {
-  filterFavoriteRecipes(event)
+  domUpdates.filterFavoriteRecipes(event, user)
 });
 
-// function getRandomIndex(array) {
-//   return Math.floor(Math.random() * array.length);
-// };
-
-// function displayNewImages() {
-//   const images = recipes.map((recipe) => {
-//     return recipe.image;
-//   });
-
-
-
-
-
-
-
-
-
-
-
-function searchFavoriteRecipe() {
-    filteredByTagArea.innerHTML = ''
-    let searchInput = document.querySelector(".favorite-searchbar").value
-    searchInput = searchInput.toLowerCase();
-    user.favoriteRecipes.forEach((recipe) => {
-        if (recipe.name.toLowerCase().includes(searchInput)) {
-            createFilteredArea();
-        filteredByTagArea.innerHTML += `
-        <h1 id=${recipe.id}>${recipe.name}</h1>
-        `
-        }
-    })
-    document.querySelector(".favorite-searchbar").value = ""
-};
-
-function displayRecipe(event) {
-  createRecipeArea();
-  populateRecipeArea();
-};
-
-function createRecipeArea() {
-  myPantryArea.classList.add("hidden")
-  filterFavoritesArea.classList.add("hidden");
-  foodImagesSection.classList.add("hidden");
-  allRecipesSection.classList.add("hidden");
-  favoriteRecipeArea.classList.add("hidden");
-  homePageStyling.classList.add("hidden");
-  viewAllButton.classList.remove("hidden");
-  displayRecipeSection.classList.remove("hidden");
-  displayRecipeSection.innerHTML = "";
-  toCookButtonArea.innerHTML = "";
-  filteredByTagArea.classList.add("hidden");
-  allRecipeSearchbar.classList.remove("hidden");
-  favoritesSearchbar.classList.add("hidden");
-  toCookButtonArea.classList.remove("hidden");
-  recipesToCookArea.classList.add("hidden");
-};
-
-function createFilteredArea() {
-  myPantryArea.classList.add("hidden")
-  filterFavoritesArea.classList.add("hidden");
-  foodImagesSection.classList.add("hidden");
-  allRecipesSection.classList.add("hidden");
-  favoriteRecipeArea.classList.add("hidden");
-  displayRecipeSection.classList.add("hidden");
-  displayRecipeSection.innerHTML = "";
-  filteredByTagArea.classList.remove("hidden");
-  toCookButtonArea.classList.add("hidden");
-  viewAllButton.classList.remove("hidden");
-};
-
-
-
-function populateRecipeArea() {
-  recipeRepo.data.forEach((recipe) => {
-    let newRecipeId = recipe.id + 1;
-    let newRecipeId2 = recipe.id + 2;
-    let newRecipeId3 = recipe.id + 3;
-    if(event.target.id === recipe.id.toString()) {
-      let recipeToDisplay = new Recipe(recipe, ingredientsData)
-      let recipeCost = recipeToDisplay.getRecipeCost()
-      recipeToDisplay.createIngredientList()
-      const officialIngredients = recipeToDisplay.ingredientsList.map((ingredient) => {
-        return ` ${ingredient.name}`
-      })
-      let recipeInstructions = recipe["instructions"]
-      let officialInstructions = recipeInstructions.map((instruction) => {
-        return instruction.instruction
-      }).flat()
-      displayRecipeSection.innerHTML += `
-      <img class="recipe-main-image" src="${recipeToDisplay.image}">
-      <h1>${recipeToDisplay.name}</h1>
-      <div class="favorite-btn-area">
-      <button class="favorite-btn" id=${recipeToDisplay.id}>Favorite Recipe</button>
-      </div>
-      <h2>Cost: $${recipeCost}</h2>
-      <h3>Ingredients: </h3>
-      <p>${officialIngredients}</p>
-      <h3>Instructions: </h3>
-      <p>${officialInstructions}</p>
-      `
-      toCookButtonArea.innerHTML += `
-      <button class="to-cook-btn" id=${newRecipeId2}>Add To My Cook List</button>
-     `
-    }
-
-    if(event.target.id === newRecipeId.toString()) {
-      user.unfavoriteRecipe(recipe)
-      updateFavoritesArea()
-      displayFavoriteRecipeArea();
-    }
-
-    if(event.target.id === newRecipeId2.toString()) {
-      addRecipesToCook();
-  }
-
-//   if(event.target.id === newRecipeId3.toString()) {
-//     // console.log(event.target.id)
-//     cookRecipe();
-// }
-})
-};
-
-
-function displayFavoriteRecipeArea() {
-  myPantryArea.classList.add("hidden")
-  filterFavoritesArea.classList.remove("hidden");
-  foodImagesSection.innerHTML = "";
-  foodImagesSection.classList.add("hidden");
-  allRecipesSection.classList.add("hidden");
-  viewAllButton.classList.remove("hidden");
-  displayRecipeSection.classList.add("hidden");
-  displayRecipeSection.innerHTML = "";
-  filteredByTagArea.innerHTML= "";
-  favoriteRecipeArea.classList.remove("hidden");
-  allRecipeSearchbar.classList.add("hidden");
-  favoritesSearchbar.classList.remove("hidden");
-  toCookButtonArea.classList.add("hidden");
-  recipesToCookArea.classList.add("hidden");
-};
-
-function displayRecipesToCookArea() {
-  console.log(user.recipesToCook)
-  recipesToCookArea.innerHTML = ""
-  user.recipesToCook.forEach((recipeToCook) => {
-    recipesToCookArea.innerHTML += `
-    <div class="recipes-to-cook-styling">
-    <h1 id=${recipeToCook.id}>${recipeToCook.name}</h1>
-    <button class="cook-recipe-btn" id=${recipeToCook.id + 3}>Cook</button>
-    </div>
-
-    `
-  })
-  myPantryArea.classList.add("hidden")
-  filterFavoritesArea.classList.add("hidden");
-  foodImagesSection.innerHTML = "";
-  foodImagesSection.classList.add("hidden");
-  allRecipesSection.classList.add("hidden");
-  viewAllButton.classList.remove("hidden");
-  displayRecipeSection.classList.add("hidden");
-  displayRecipeSection.innerHTML = "";
-  favoriteRecipeArea.classList.add("hidden");
-  recipesToCookArea.classList.remove("hidden");
-  allRecipeSearchbar.classList.remove("hidden");
-  favoritesSearchbar.classList.add("hidden");
-  toCookButtonArea.classList.add("hidden");
-  filteredByTagArea.classList.add("hidden");
-};
-
-function addRecipeToFavorites(event) {
-  recipeRepo.data.forEach((recipe) => {
-    if(event.target.id === recipe.id.toString() && !user.favoriteRecipes.includes(recipe)) {
-      user.favoriteRecipe(recipe)
-        favoriteRecipeArea.innerHTML = ""
-      user.favoriteRecipes.forEach((favoriteRecipe) => {
-        favoriteRecipeArea.innerHTML += `
-        <div class="favorite-recipe-styling">
-        <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
-        <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
-        </div>
-          `
-      })
-    }
-  })
-};
-
-function addRecipesToCook(event) {
-  recipeRepo.data.forEach((recipe) => {
-    let recipeId2 = recipe.id + 2;
-    if(event.target.id === recipeId2.toString() && !user.recipesToCook.includes(recipe)) {
-      user.decideToCook(recipe)
-      // recipesToCookArea.innerHTML = ""
-      // user.recipesToCook.forEach((recipeToCook) => {
-      //   recipesToCookArea.innerHTML += `
-      //   <div class="recipes-to-cook-styling">
-      //   <h1 id=${recipeToCook.id}>${recipeToCook.name}</h1>
-      //   <button class="cook-recipe-btn" id=${recipeToCook.id + 3}>Cook</button>
-      //   </div>
-      //
-      //   `
-      // })
-    }
-  })
-};
-
-function updateFavoritesArea() {
-  favoriteRecipeArea.innerHTML = ""
-  user.favoriteRecipes.forEach((favoriteRecipe) => {
-  favoriteRecipeArea.innerHTML += `
-  <div class="favorite-recipe-styling">
-  <h1 id=${favoriteRecipe.id}>${favoriteRecipe.name}</h1>
-  <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
-  </div>
-    `
-})
-};
-
-function filterRecipes(event) {
-  recipeRepo.data.forEach((recipe) => {
-    let recipeTags = recipe.tags.forEach((recipeTag) => {
-      if(filterDropdown.value === recipeTag) {
-        createFilteredArea();
-        filteredByTagArea.innerHTML += `
-        <div class="filtered-recipe-styling">
-        <h1 id=${recipe.id}>${recipe.name}</h1>
-        </div>
-        `      }
-    })
-    return recipeTags
-  })
-};
-
-function filterFavoriteRecipes(event) {
-  user.favoriteRecipes.forEach((recipe) => {
-    let recipeTags = recipe.tags.forEach((recipeTag) => {
-      if(filterDropdown1.value === recipeTag) {
-        createFilteredArea();
-        filteredByTagArea.innerHTML += `
-        <section class="filtered-recipe-styling">
-        <h1 id=${recipe.id}>${recipe.name}</h1>
-        </section>
-        `      }
-    })
-    return recipeTags
-  })
-}
-
-function cookRecipe(event) {
-
-  user.recipesToCook.forEach((recipe) => {
-    let recipeId = recipe.id + 3;
-    userPantry.ingredients = user.pantry
-    if(event.target.id === recipeId.toString() && userPantry.determineIngredients(recipe.id) === 'You do not have enough ingredients to cook this recipe.') {
-      console.log("you do not have enough ingredients")
-
-    }
-    if(event.target.id === recipeId.toString() && userPantry.determineIngredients(recipe.id) === 'You have enough ingredients') {
-        console.log("you have enough ingredients")
-        console.log("recipe: ", recipe)
-
-        recipe.ingredients.forEach((recipeIngredient) => {
-          let ingredientToRemove = {
-            "userID": user.id,
-            "ingredientID": recipeIngredient.id,
-            "ingredientModification": -recipeIngredient.quantity.amount
-          }
-          removeFromUserPantry(ingredientToRemove)
-        })
-
-        user.recipesToCook.forEach((recipeToCook, i) => {
-          if(recipeToCook.id === recipe.id) {
-            console.log("i ", i)
-            user.recipesToCook.splice(i, 1)
-            console.log("recipes to cook")
-          }
-        })
-
-
-
-        console.log("user pantry after: ", userPantry)
-
-    }
-
-  })
-
-}
 
 export { ingredientsData, recipes, user, userPantry, recipeRepo }

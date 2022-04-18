@@ -9,75 +9,44 @@ class Pantry {
 
 
 
-    determineIngredients(recipeId) {
-      this.ingredientsNeeded = [];
-      this.ingredientsForRecipe = [];
-        let returnStatement;
-        let pantryIngredientArray = [];
-        let allRecipeIngredients = []
-        this.recipesToCook.forEach((recipe) => {
-            if(recipe.id === recipeId) {
-              this.ingredientsForRecipe = recipe.ingredients
-            let recipeIngredients = recipe.ingredients.map((recipeIngredient) => {
-                allRecipeIngredients.push(recipeIngredient)
-                return recipeIngredient.id
-            })
+    determineIngredients(recipe) {
+      if(!recipe) {
+        throw new Error("Recipe is undefined")
+      }
 
-            let checkRecipeId = recipeIngredients.forEach((ingredientId) => {
-                let pantryArray = this.ingredients.map((ingredient) => {
-                    return ingredient.ingredient
-                })
-                if (pantryArray.includes(ingredientId)) {
-                    pantryIngredientArray.push('Yes')
-                } else {
-                    allRecipeIngredients.forEach((allRecipeIngredient) => {
-                      if(allRecipeIngredient.id === ingredientId) {
-                        this.ingredientsNeeded.push(allRecipeIngredient)
-                      }
-                    })
-                    pantryIngredientArray.push('No')
-                }
-            })
+      recipe.ingredients.forEach((recipeIngredient) => {
+        let ingredient = this.ingredients.find((ing) => {
+          return ing.ingredient === recipeIngredient.id
+        });
+
+        if (ingredient) {
+          let ingredientQuantity = ingredient.amount;
+          let recipeIngredientQuantity = recipeIngredient.quantity.amount;
+          if (ingredientQuantity >= recipeIngredientQuantity) {
+            this.enoughIngredients = true
+          }
+          else if (ingredientQuantity < recipeIngredientQuantity) {
+            this.enoughIngredients = false;
+            this.ingredientsNeeded.push(ingredient);
+          } else {
+            this.enoughIngredients = false;
+            this.ingredientsNeeded.push(recipeIngredient)
+          }
         }
-        if (pantryIngredientArray.includes('No')) {
-            returnStatement = 'You do not have enough ingredients to cook this recipe.'
-        } else {
-          let doesItMatch = [];
-            recipe.ingredients.forEach((ingredientInRecipe) => {
-            let hasIngredient = this.ingredients.find((thePantryIngredient) => {
-                return ingredientInRecipe.id === thePantryIngredient.ingredient && ingredientInRecipe.quantity.amount <= thePantryIngredient.amount
-              })
-              if(hasIngredient) {
-                doesItMatch.push('Yes')
-              }
-              else {
-                allRecipeIngredients.forEach((allRecipeIngredient) => {
-                  if(allRecipeIngredient.id === ingredientInRecipe.id) {
-                    let pantryIngredientAmount = ((this.ingredients.filter((thePantryIngredient) => {
-                      if (allRecipeIngredient.id === thePantryIngredient.ingredient) {
-                        return thePantryIngredient.amount
-                      }
-                    })))
-                    allRecipeIngredient.quantity.amount = ingredientInRecipe.quantity.amount - pantryIngredientAmount[0].amount
-                    if(!this.ingredientsNeeded.includes(allRecipeIngredient)) {
-                      this.ingredientsNeeded.push(allRecipeIngredient)
-                    }
+      })
+      if(this.ingredientsNeeded.length > 0) {
+      this.enoughIngredients = false
+      }
+      else {
+      this.enoughIngredients = true
+      }
+      return this.enoughIngredients
 
-                  }
-                })
+      }
 
-                doesItMatch.push('No')
-              }
-            })
-            if (doesItMatch.includes('No')) {
-              returnStatement = 'You do not have enough ingredients to cook this recipe.'
-            } else {
-              returnStatement = 'You have enough ingredients'
-            }
-         }
-       })
-       return returnStatement
-    }
+
+
+
 
     removeIngredients() {
       console.log("pantry ingredients in function: ", this.ingredients)
