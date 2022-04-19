@@ -7,18 +7,14 @@ class Pantry {
         this.ingredientsForRecipe = []
     }
 
-
-
     determineIngredients(recipe) {
       if(!recipe) {
         throw new Error("Recipe is undefined")
       }
-
       recipe.ingredients.forEach((recipeIngredient) => {
         let ingredient = this.ingredients.find((ing) => {
           return ing.ingredient === recipeIngredient.id
         });
-
         if (ingredient) {
           let ingredientQuantity = ingredient.amount;
           let recipeIngredientQuantity = recipeIngredient.quantity.amount;
@@ -35,34 +31,23 @@ class Pantry {
         }
       })
       if(this.ingredientsNeeded.length > 0) {
-      this.enoughIngredients = false
+        this.enoughIngredients = false
       }
       else {
-      this.enoughIngredients = true
+        this.enoughIngredients = true
       }
-      return this.enoughIngredients
-
+        return this.enoughIngredients
       }
-
-
-
-
 
     removeIngredients() {
-      console.log("pantry ingredients in function: ", this.ingredients)
       this.ingredients.forEach((pantryIngredient) => {
         this.ingredientsForRecipe.forEach((recipeIngredient) => {
           if(pantryIngredient.ingredient === recipeIngredient.id) {
             pantryIngredient.amount -= recipeIngredient.quantity.amount * 2
-            console.log("pantry Ingredient amount: ", pantryIngredient, pantryIngredient.amount, pantryIngredient.ingredient)
-            console.log("recipe ingredient amount: ", recipeIngredient.quantity.amount, recipeIngredient.id)
-
           }
-
         })
       })
     }
-
     updatePantry() {
       return this.ingredients;
     }

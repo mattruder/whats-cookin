@@ -4,11 +4,6 @@ import Recipe from './classes/Recipe.js';
 import User from './classes/User.js';
 import RecipeRepository from './classes/RecipeRepository.js';
 import Pantry from './classes/Pantry.js';
-// import { recipeRepo } from './scripts.js';
-// import { user } from './scripts.js';
-// // import { recipes } from './scripts.js';
-// // import { userPantry } from './scripts.js';
-// import { ingredientsData } from './scripts.js';
 
 const viewAllButton = document.querySelector(".view-all-btn");
 const foodImagesSection = document.querySelector(".food-images-section");
@@ -86,7 +81,6 @@ filteredByTagArea])
 },
 
 displayNewImages(array) {
-  console.log(array)
   const images = array.map((recipe) => {
     return recipe.image;
   })
@@ -119,29 +113,18 @@ searchRecipe(recipeRepo) {
     filteredByTagArea.innerHTML = ""
     let searchInput = searchbarValue.value
     searchInput = searchInput.toLowerCase();
-
     recipeRepo.data.map((recipe) => {
-
         if (searchInput.length > 0 && recipe.name.toLowerCase().includes(searchInput)) {
             this.createFilteredArea();
-
         filteredByTagArea.innerHTML += `
         <h1 id=${recipe.id}>${recipe.name}</h1>
         `
         searchError.classList.add("hidden");
            searchbarValue.value = ''
-
-        }
-        // Now users can only input letters + charcode on line 14 in html
-
-
-        else if (searchInput.length === 0 || !recipe.name.toLowerCase().includes(searchInput)) {
+        } else if (searchInput.length === 0 || !recipe.name.toLowerCase().includes(searchInput)) {
           console.log('error here')
-          // searchError.classList.remove("hidden");
-
         }
     })
-
 },
 
 
@@ -149,7 +132,6 @@ searchRecipe(recipeRepo) {
 searchFavoriteRecipe(user) {
     filteredByTagArea.innerHTML = ''
     let searchInput = favoriteSearchbarValue.value
-
     searchInput = searchInput.toLowerCase();
     user.favoriteRecipes.forEach((recipe) => {
         if (searchInput.length > 0 && recipe.name.toLowerCase().includes(searchInput)) {
@@ -160,11 +142,8 @@ searchFavoriteRecipe(user) {
         searchError.classList.add("hidden");
          favoriteSearchbarValue.value = ''
         }
-
         else if (searchInput.length === 0 || !recipe.name.toLowerCase().includes(searchInput)) {
           console.log('error here')
-          searchError.classList.remove("hidden");
-
         }
     })
     favoriteSearchbarValue.value = ""
@@ -176,8 +155,6 @@ createFilteredArea() {
   this.removeHidden([filteredByTagArea, viewAllButton])
   displayRecipeSection.innerHTML = "";
 },
-
-
 
 displayRecipe(event, recipeRepo, ingredientsData, user) {
   this.createRecipeArea();
@@ -253,7 +230,6 @@ displayRecipesToCookArea(user) {
   this.addHidden([myPantryArea, filterFavoritesArea, favoritesSearchbar, toCookButtonArea,
   filteredByTagArea, foodImagesSection, allRecipesSection, displayRecipeSection,
   favoriteRecipeArea])
-
   this.removeHidden([viewAllButton, recipesToCookArea, allRecipeSearchbar])
 
   displayRecipeSection.innerHTML = "";
@@ -288,7 +264,6 @@ addRecipeToFavorites(event, recipeRepo, user) {
 },
 
 updateFavoritesArea(user) {
-  console.log(user)
   favoriteRecipeArea.innerHTML = ""
   user.favoriteRecipes.forEach((favoriteRecipe) => {
   favoriteRecipeArea.innerHTML += `
@@ -297,7 +272,7 @@ updateFavoritesArea(user) {
     <button class="unfavorite-btn" id=${favoriteRecipe.id +1}>Unfavorite</button>
   </div>
     `
-})
+  })
 },
 
 addRecipesToCook(event, user, recipeRepo) {
@@ -341,23 +316,13 @@ filterFavoriteRecipes(event, user) {
 
 cookRecipe(event, user, userPantry) {
   userPantry = new Pantry(user)
-
   user.recipesToCook.forEach((recipe) => {
-
     let recipeId = recipe.id + 3;
-
     if(event.target.id === recipeId.toString() && userPantry.determineIngredients(recipe) === false) {
-      console.log(userPantry)
-      console.log(recipe)
       console.log("you do not have enough ingredients")
-
     }
     else {
-      console.log(userPantry)
-      console.log(recipe)
-        console.log("you have enough ingredients")
-
-
+      console.log("you have enough ingredients")
         recipe.ingredients.forEach((recipeIngredient) => {
           let ingredientToRemove = {
             "userID": user.id,
@@ -366,7 +331,6 @@ cookRecipe(event, user, userPantry) {
           }
           this.removeFromUserPantry(ingredientToRemove)
         })
-
         user.recipesToCook.forEach((recipeToCook, i) => {
           if(recipeToCook.id === recipe.id) {
             console.log("i ", i)
@@ -388,11 +352,11 @@ removeFromUserPantry(ingredientToRemove) {
   headers: {
       'Content-Type' : 'application/json'
   }
-})
-.then(response => {
-  this.checkError(response)
-})
-.catch(err => setTimeout(errorMessage.classList.remove('hidden'), 1000))
+  })
+  .then(response => {
+    this.checkError(response)
+  })
+  .catch(err => setTimeout(errorMessage.classList.remove('hidden'), 1000))
 },
 
 addToUserPantry(ingredientToAdd) {
@@ -428,14 +392,6 @@ checkError(response) {
     console.log(response.statusText)
   }
 }
-
-
-
-
-
-
-
-
 
 }
 

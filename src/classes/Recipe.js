@@ -32,19 +32,15 @@ getRecipeCost() {
         let cost = ingredient.estimatedCostInCents * recipeIngredient.quantity.amount;
         ingredientCosts.push(cost)
       }
-
     })
-
       return filteredIngredients
-
   })
   let finalCost = ingredientCosts.reduce((sum, num) => {
     sum += (num / 100);
     return sum
   }, 0)
   let realFinalCost = Number(finalCost.toFixed(2));
-return realFinalCost
-
+  return realFinalCost
 }
 
 getRecipeInstructions() {

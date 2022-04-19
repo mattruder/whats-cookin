@@ -3,6 +3,7 @@ class RecipeRepository {
     this.data = data;
     this.recipes = [];
   }
+  
   getRecipeByTag(tag) {
     this.recipes = []
     this.data.filter((recipe) => {
@@ -11,6 +12,7 @@ class RecipeRepository {
       }
     })
   }
+
   getRecipeByName(phrase) {
     this.recipes = []
     this.data.filter((recipe) => {
@@ -20,7 +22,6 @@ class RecipeRepository {
     })
     return this.recipes
   }
-
 };
 
 
