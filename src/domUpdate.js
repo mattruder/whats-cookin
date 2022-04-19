@@ -137,7 +137,7 @@ searchRecipe(recipeRepo) {
 
         else if (searchInput.length === 0 || !recipe.name.toLowerCase().includes(searchInput)) {
           console.log('error here')
-          searchError.classList.remove("hidden");
+          // searchError.classList.remove("hidden");
 
         }
     })
