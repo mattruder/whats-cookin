@@ -20,7 +20,7 @@ getData().then(data => {
   userData = allData[0][0]
   ingredientsData = allData[0][1]
   recipes = allData[0][2]
-  user = new User(userData[9])
+  user = new User(userData[domUpdates.getRandomIndex(userData)])
   userPantry = new Pantry(user)
   recipeRepo = new RecipeRepository(recipes)
   domUpdates.displayNewImages(recipes)
@@ -30,7 +30,6 @@ const viewAllButton = document.querySelector(".view-all-btn");
 const foodImagesSection = document.querySelector(".food-images-section");
 const allRecipesSection = document.querySelector(".all-recipes");
 const allRecipeList = document.querySelector(".all-recipe-list");
-// const homeButton = document.querySelector(".home-btn");
 const favoriteRecipeArea = document.querySelector(".favorite-recipe-area");
 const favoritesAreaButton = document.querySelector(".favorites-btn");
 const favoriteRecipeButton = document.querySelector(".favorite-btn");
